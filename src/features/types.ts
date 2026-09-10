@@ -56,6 +56,7 @@ export interface GoalDetailPageProps {
   completionLogs: CompletionLog[];
   progress?: GoalProgress;
   onBack?: () => void;
+  onDeleteGoal?: () => void;
   onAddStep?: (parentStepId?: string) => void;
   onEditStep?: (step: GoalStep) => void;
   onToggleStep?: (step: GoalStep) => void;

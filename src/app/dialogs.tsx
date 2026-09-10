@@ -83,11 +83,13 @@ export function EventDialog({
   goals,
   editing,
   onClose,
+  onDelete,
   onSubmit,
 }: {
   goals: Goal[];
   editing?: CalendarEvent;
   onClose: () => void;
+  onDelete?: () => void;
   onSubmit: (value: {
     title: string;
     startAt: string;
@@ -147,6 +149,7 @@ export function EventDialog({
           ]} />
         </div>
         <div className="dialog-actions">
+          {editing && onDelete && <Button className="delete-action" type="button" tone="danger" onClick={onDelete}>删除日期</Button>}
           <Button type="button" tone="quiet" onClick={onClose}>
             取消
           </Button>
@@ -164,12 +167,14 @@ export function StepDialog({
   parentStepId,
   editing,
   onClose,
+  onDelete,
   onSubmit,
 }: {
   goalId: string;
   parentStepId?: string;
   editing?: GoalStep;
   onClose: () => void;
+  onDelete?: () => void;
   onSubmit: (value: {
     title: string;
     notes?: string;
@@ -208,6 +213,7 @@ export function StepDialog({
           <textarea value={notes} onChange={(e) => setNotes(e.target.value)} />
         </label>
         <div className="dialog-actions">
+          {editing && onDelete && <Button className="delete-action" type="button" tone="danger" onClick={onDelete}>删除步骤</Button>}
           <Button type="button" tone="quiet" onClick={onClose}>
             取消
           </Button>
@@ -227,6 +233,7 @@ export function PlanDialog({
   preset,
   editing,
   onClose,
+  onDelete,
   onSubmit,
 }: {
   goals: Goal[];
@@ -235,6 +242,7 @@ export function PlanDialog({
   preset?: Partial<PlanBlock>;
   editing?: PlanBlock;
   onClose: () => void;
+  onDelete?: () => void;
   onSubmit: (value: {
     date: LocalDate;
     title: string;
@@ -321,6 +329,7 @@ export function PlanDialog({
           <textarea value={notes} onChange={(e) => setNotes(e.target.value)} />
         </label>
         <div className="dialog-actions">
+          {editing && onDelete && <Button className="delete-action" type="button" tone="danger" onClick={onDelete}>删除安排</Button>}
           <Button type="button" tone="quiet" onClick={onClose}>
             取消
           </Button>
@@ -331,6 +340,24 @@ export function PlanDialog({
       </form>
     </Modal>
   );
+}
+
+export function ConfirmDeleteDialog({ title, description, confirmLabel, onClose, onConfirm }: {
+  title: string;
+  description: string;
+  confirmLabel: string;
+  onClose: () => void;
+  onConfirm: () => void;
+}) {
+  return <Modal title={title} onClose={onClose}>
+    <div className="delete-confirm">
+      <p>{description}</p>
+      <div className="dialog-actions">
+        <Button type="button" tone="quiet" onClick={onClose}>取消</Button>
+        <Button type="button" tone="danger" onClick={onConfirm}>{confirmLabel}</Button>
+      </div>
+    </div>
+  </Modal>;
 }
 
 export function CompleteDialog({

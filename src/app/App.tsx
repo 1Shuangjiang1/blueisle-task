@@ -27,6 +27,7 @@ import type { GoalProgress } from "../features/types";
 import { AppShell, type AppView } from "../components/layout/AppShell";
 import {
   CompleteDialog,
+  ConfirmDeleteDialog,
   EventDialog,
   GoalDialog,
   PlanDialog,
@@ -54,12 +55,18 @@ const emptySummary = (date: LocalDate): DailyReviewSummary => ({
   actualMinutes: 0,
   completionLogs: [],
 });
+type DeleteTarget =
+  | { kind: "event"; item: CalendarEvent }
+  | { kind: "goal"; item: Goal }
+  | { kind: "step"; item: GoalStep }
+  | { kind: "plan"; item: PlanBlock };
 type Dialog =
   | { type: "goal" }
   | { type: "event"; editing?: CalendarEvent }
   | { type: "plan"; preset?: Partial<PlanBlock>; editing?: PlanBlock }
   | { type: "complete"; plan: PlanBlock }
   | { type: "step"; goalId: string; parentStepId?: string; editing?: GoalStep }
+  | { type: "delete"; target: DeleteTarget }
   | null;
 
 export function App() {
@@ -468,6 +475,7 @@ export function App() {
           completionLogs={logs.filter((log) => log.goalId === selectedGoal.id)}
           progress={progress[selectedGoal.id]}
           onBack={() => setSelectedGoalId(undefined)}
+          onDeleteGoal={() => setDialog({ type: "delete", target: { kind: "goal", item: selectedGoal } })}
           onAddStep={(parentStepId) =>
             setDialog({ type: "step", goalId: selectedGoal.id, parentStepId })
           }
@@ -614,6 +622,7 @@ export function App() {
           goals={goals}
           editing={dialog.editing}
           onClose={() => setDialog(null)}
+          onDelete={dialog.editing ? () => setDialog({ type: "delete", target: { kind: "event", item: dialog.editing! } }) : undefined}
           onSubmit={(value) =>
             run(
               () => dialog.editing ? service!.calendarEvents.update(dialog.editing.id, value) : service!.createCalendarEvent(value),
@@ -630,6 +639,7 @@ export function App() {
           preset={dialog.preset}
           editing={dialog.editing}
           onClose={() => setDialog(null)}
+          onDelete={dialog.editing ? () => setDialog({ type: "delete", target: { kind: "plan", item: dialog.editing! } }) : undefined}
           onSubmit={(value) =>
             run(
               () =>
@@ -659,6 +669,7 @@ export function App() {
           parentStepId={dialog.parentStepId}
           editing={dialog.editing}
           onClose={() => setDialog(null)}
+          onDelete={dialog.editing ? () => setDialog({ type: "delete", target: { kind: "step", item: dialog.editing! } }) : undefined}
           onSubmit={(value) =>
             run(
               () =>
@@ -673,6 +684,32 @@ export function App() {
           }
         />
       )}{" "}
+      {dialog?.type === "delete" && (() => {
+        const target = dialog.target;
+        const copy = target.kind === "goal"
+          ? { title: "删除这个目标？", description: `“${target.item.title}”的步骤、关联安排、完成记录和重要日期也会一起删除。`, label: "删除目标" }
+          : target.kind === "step"
+            ? { title: "删除这个步骤？", description: `“${target.item.title}”的子步骤、关联安排和完成记录也会一起删除。`, label: "删除步骤" }
+            : target.kind === "plan"
+              ? { title: "删除这项安排？", description: `“${target.item.title}”及其完成记录会一起删除。`, label: "删除安排" }
+              : { title: "删除这个重要日期？", description: `“${target.item.title}”删除后将不再出现在日历和近期提醒中。`, label: "删除日期" };
+        return <ConfirmDeleteDialog
+          title={copy.title}
+          description={copy.description}
+          confirmLabel={copy.label}
+          onClose={() => setDialog(null)}
+          onConfirm={() => {
+            if (target.kind === "goal") setSelectedGoalId(undefined);
+            void run(
+              () => target.kind === "goal" ? service!.removeGoal(target.item.id)
+                : target.kind === "step" ? service!.removeGoalStep(target.item.id)
+                  : target.kind === "plan" ? service!.removePlanBlock(target.item.id)
+                    : service!.calendarEvents.remove(target.item.id),
+              `${copy.label}成功`,
+            );
+          }}
+        />;
+      })()}{" "}
       {notice && (
         <div className="app-toast" role="status">
           {notice}

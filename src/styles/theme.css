@@ -67,6 +67,8 @@ h2 { font-size: 1.32rem; letter-spacing: .03em; } h3 { font-size: 1.12rem; lette
 .ui-button--primary { background:linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 78%, var(--accent))); border-color:var(--primary); color:var(--primary-ink); }
 [data-theme="cyber"] .ui-button--primary { box-shadow:0 0 20px rgba(59,232,239,.22); }
 .ui-button--quiet { background:transparent; border-color:transparent; color:var(--primary); box-shadow:none; }
+.ui-button--danger { background:color-mix(in srgb, #e5484d 11%, var(--surface)); border-color:color-mix(in srgb, #e5484d 42%, var(--line)); color:#c9343b; }
+[data-theme="cyber"] .ui-button--danger { background:rgba(255,67,112,.12); border-color:rgba(255,67,112,.48); color:#ff6f98; box-shadow:0 0 16px rgba(255,67,112,.12); }
 .ui-icon-button { display:inline-grid; place-items:center; height:39px; width:39px; border:1px solid var(--line); border-radius:50%; background:var(--surface-2); color:var(--text); transition:.18s ease; }
 .ui-icon-button:hover { transform:translateY(-1px); background:var(--primary); border-color:var(--primary); color:var(--primary-ink); }
 .button-group { display:flex; flex-wrap:wrap; gap:10px; }

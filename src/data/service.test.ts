@@ -190,6 +190,34 @@ describe("TaskService", () => {
     expect(removed.at(-1)).toMatchObject({ desiredSnapshot: null, predecessorOpId: operations[1]?.opId });
   });
 
+  it("removes plans, step subtrees, goals, and their related records with sync tombstones", async () => {
+    const { database, service } = await makeService();
+    const goal = await service.createGoal({ title: "准备面试" });
+    const parent = await service.createGoalStep({ goalId: goal.id, title: "算法题" });
+    const child = await service.createGoalStep({ goalId: goal.id, parentStepId: parent.id, title: "动态规划" });
+    const event = await service.createCalendarEvent({ title: "面试日期", startAt: "2026-09-20T04:00:00.000Z", goalId: goal.id });
+    const plan = await service.createPlanBlock({ title: "刷动态规划", date: "2026-09-11", goalId: goal.id, goalStepId: child.id });
+    const log = await service.completePlanBlock(plan.id, { actualMinutes: 60 });
+
+    await service.removeGoalStep(parent.id);
+    expect(await service.goalSteps.list()).toEqual([]);
+    expect(await service.planBlocks.list()).toEqual([]);
+    expect(await service.completionLogs.list()).toEqual([]);
+    expect((await database.syncOutbox.where("entityId").equals(log.id).sortBy("createdAt")).at(-1)?.desiredSnapshot).toBeNull();
+
+    const remainingPlan = await service.createPlanBlock({ title: "整理项目", date: "2026-09-12", goalId: goal.id });
+    await service.completePlanBlock(remainingPlan.id, { actualMinutes: 30 });
+    await service.removeGoal(goal.id);
+
+    expect(await service.goals.list()).toEqual([]);
+    expect(await service.calendarEvents.list()).toEqual([]);
+    expect(await service.planBlocks.list()).toEqual([]);
+    expect(await service.completionLogs.list()).toEqual([]);
+    for (const id of [goal.id, event.id, remainingPlan.id]) {
+      expect((await database.syncOutbox.where("entityId").equals(id).sortBy("createdAt")).at(-1)?.desiredSnapshot).toBeNull();
+    }
+  });
+
   it("links a new mutation to the graph tail even when stored timestamps go backwards", async () => {
     const { database, service } = await makeService();
     const goal = await service.createGoal({ title: "时钟回退" });

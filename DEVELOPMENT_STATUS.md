@@ -1,18 +1,28 @@
 # 蓝屿任务 Next — Development Status
 
-更新时间：2026-09-10（Asia/Shanghai）
-总体状态：in progress — v0.1.6 GitHub 云端构建中
-当前里程碑：M7 响应式适配（已推送）
+更新时间：2026-09-11（Asia/Shanghai）
+总体状态：in progress — 删除功能补全与校验
+当前里程碑：M8 实体删除闭环
 
 ## Resume here
 
-- 最后完成：Android APK 与 Windows installer 均已产出；本地 Git main 仓库和 Web/Windows/Android checks workflow 已建立。
-- 当前/可能运行：GitHub Actions release run 34484843853 正在构建 v0.1.6；本地预览服务已停止。
-- 精确下一动作：等待 run 34484843853 完成，核验 latest.json、NSIS 与签名文件。
-- 远程状态：v0.1.2 至 v0.1.5 均已成功发布；v0.1.6 tag 与代码已推送。正确的两个 GitHub Secrets 已保存。
+- 最后完成：v0.1.6 已成功发布，日期弹层和窄屏布局适配完成。
+- 当前/可能运行：删除闭环 verified locally；准备提交并推送 v0.1.7，尚无长时间进程。
+- 精确下一动作：提交本轮修改，推送 main 和 v0.1.7 tag，随后监视 GitHub Actions 构建。
+- 预计修改：`src/data/service.ts`、`src/data/service.test.ts`、`src/app/App.tsx`、`src/app/dialogs.tsx`、`src/features/GoalsPage.tsx`、`src/features/types.ts`、相关样式。
+- 计划验证：删除重要日期；删除安排并清理完成记录；删除步骤及其子步骤和安排；删除目标及全部关联数据；确认同步 outbox 生成 tombstone；typecheck/build。
+- 远程状态：v0.1.2 至 v0.1.6 均已成功发布；本轮尚未修改远程状态。
 - 若立即中断：先运行 `Get-ChildItem -Force` 检查骨架，再按本文件“精确下一步”继续。
 - 阻塞：无。
-- 远程状态：未修改；未创建 GitHub 仓库，未修改 Supabase。
+
+## M8 删除闭环
+
+- 状态：verified locally；准备发布 v0.1.7。
+- 已实现：重要日期、每日安排、目标步骤和目标均提供删除入口与二次确认；目标、步骤和安排删除时会清理关联的下级实体及完成记录。
+- 同步行为：所有实体仍通过 repository 软删除，每条删除均写入 outbox tombstone，可同步到其他设备。
+- 最新验证：`npm run typecheck` 通过；`npx vitest run src/data/service.test.ts` 12/12 通过；`npm run build` 通过。仅有既存的大包体积提示。
+- 浏览器验证：实际删除重要日期后，日历和近期提醒立即消失；目标页、步骤编辑框和安排编辑框的删除入口均已确认可见，确认文案正确。
+- 下一动作：提交并发布 v0.1.7。
 
 ## 目标与成功标准
 

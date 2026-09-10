@@ -263,6 +263,9 @@ export interface TaskService extends TaskDataService {
     id: string,
     changes: UpdateInput<PlanBlock>,
   ): Promise<PlanBlock>;
+  removePlanBlock(id: string): Promise<void>;
+  removeGoalStep(id: string): Promise<void>;
+  removeGoal(id: string): Promise<void>;
   upsertDailyReview(
     date: LocalDate,
     changes: Omit<Partial<DailyReview>, keyof BaseEntity | "date">,
@@ -382,6 +385,48 @@ export function createTaskService(database: TaskDatabase = db): TaskService {
       if (!current) throw new Error(`Plan block not found: ${id}`);
       assertPlanTime({ ...current, ...changes });
       return service.planBlocks.update(id, changes);
+    },
+    async removePlanBlock(id) {
+      const logs = await service.getCompletionLogs(id);
+      for (const log of logs) await service.completionLogs.remove(log.id);
+      await service.planBlocks.remove(id);
+    },
+    async removeGoalStep(id) {
+      const allSteps = await service.goalSteps.list();
+      const removedIds = new Set([id]);
+      let changed = true;
+      while (changed) {
+        changed = false;
+        for (const step of allSteps) {
+          if (step.parentStepId && removedIds.has(step.parentStepId) && !removedIds.has(step.id)) {
+            removedIds.add(step.id);
+            changed = true;
+          }
+        }
+      }
+      const affectedPlans = (await service.planBlocks.list()).filter(
+        (plan) => plan.goalStepId && removedIds.has(plan.goalStepId),
+      );
+      for (const plan of affectedPlans) await service.removePlanBlock(plan.id);
+      const remainingLogs = (await service.completionLogs.list()).filter(
+        (log) => log.goalStepId && removedIds.has(log.goalStepId),
+      );
+      for (const log of remainingLogs) await service.completionLogs.remove(log.id);
+      for (const step of allSteps.filter((item) => removedIds.has(item.id)).reverse())
+        await service.goalSteps.remove(step.id);
+    },
+    async removeGoal(id) {
+      const [linkedLogs, linkedPlans, linkedEvents, linkedSteps] = await Promise.all([
+        service.completionLogs.list().then((items) => items.filter((item) => item.goalId === id)),
+        service.planBlocks.list().then((items) => items.filter((item) => item.goalId === id)),
+        service.calendarEvents.list().then((items) => items.filter((item) => item.goalId === id)),
+        service.goalSteps.list().then((items) => items.filter((item) => item.goalId === id)),
+      ]);
+      for (const log of linkedLogs) await service.completionLogs.remove(log.id);
+      for (const plan of linkedPlans) await service.planBlocks.remove(plan.id);
+      for (const event of linkedEvents) await service.calendarEvents.remove(event.id);
+      for (const step of linkedSteps.reverse()) await service.goalSteps.remove(step.id);
+      await service.goals.remove(id);
     },
     async getSettings() {
       const existing = await database.deviceSettings.get(SETTINGS_ID);
