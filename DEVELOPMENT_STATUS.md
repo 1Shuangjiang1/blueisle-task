@@ -1,15 +1,15 @@
 # 蓝屿任务 Next — Development Status
 
 更新时间：2026-09-10（Asia/Shanghai）
-总体状态：in progress — v0.1.5 GitHub 云端构建中
-当前里程碑：M6 UI 视觉与交互修复（已推送）
+总体状态：in progress — v0.1.6 发布准备
+当前里程碑：M7 响应式适配（本地验证完成）
 
 ## Resume here
 
 - 最后完成：Android APK 与 Windows installer 均已产出；本地 Git main 仓库和 Web/Windows/Android checks workflow 已建立。
-- 当前/可能运行：GitHub Actions release run 34482708764 正在构建 v0.1.5 Windows 正式包；本地隐藏预览服务准备停止。
-- 精确下一动作：等待 run 34482708764 完成，核验安装包、签名与 latest.json；若失败则读取具体步骤日志修复。
-- 远程状态：v0.1.2、v0.1.3、v0.1.4 已发布；v0.1.5 tag 与代码已推送。正确的两个 GitHub Secrets 已保存。
+- 当前/可能运行：v0.1.6 响应式改动已实现；隐藏预览服务 PID 76268 仍在运行，验证结束后需停止。
+- 精确下一动作：完成最后一次 typecheck/build，停止预览服务，提交并推送 v0.1.6 tag。
+- 远程状态：v0.1.2 至 v0.1.5 均已成功发布。正确的两个 GitHub Secrets 已保存。
 - 若立即中断：先运行 `Get-ChildItem -Force` 检查骨架，再按本文件“精确下一步”继续。
 - 阻塞：无。
 - 远程状态：未修改；未创建 GitHub 仓库，未修改 Supabase。
@@ -103,6 +103,13 @@ M1 验收闭环：创建目标 → 子步骤 → 安排今天 14:00–16:00 → 
 - 验证计划：typecheck、production build、浏览器创建日期/目标/安排闭环；检查 Rust release subsystem 配置。
 - 验证结果：页面内原生 date/select 数量均为 0；选择日期后创建目标成功且弹窗关闭；09:00—10:00 安排保存成功；临近日期标签文字完整、水平不溢出、垂直偏差 0；typecheck/build 成功；Rust release check 完成。
 - 中断后的下一动作：推送 v0.1.5 tag并查询 release workflow。
+
+## 响应式弹层与窄窗口适配（已本地验证）
+
+- 当前步骤：verified locally。
+- 已实现：弹层根据触发器上下可用空间选择 `opens-up`/`opens-down`；月历与选项面板缩小；1120/920/520px 增加渐进重排；重要日期标题取消省略号并允许完整换行。
+- 验证结果：底部日期字段为 `opens-up`，顶部日期字段为 `opens-down`；两者面板均在 720px 高视口内，实测约 259×318px；“即将到来”标题已取消省略号；1120/1020/920/760/520px 分级重排覆盖规划、今天、目标、回顾和时间线。
+- 中断后的下一动作：运行 typecheck/build 后发布 v0.1.6。
 
 ## 已完成
 

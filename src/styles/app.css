@@ -25,7 +25,7 @@
 .upcoming-list button { align-items: center; min-width: 0; }
 .upcoming-list button > span { flex: 0 0 43px; }
 .upcoming-list button > div { min-width: 0; }
-.upcoming-list button > div strong, .upcoming-list button > div small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.upcoming-list button > div strong, .upcoming-list button > div small { white-space:normal; overflow-wrap:anywhere; }
 .upcoming-list .ui-status { flex: 0 0 auto; align-self: center; margin-left: 3px; }
 
 @media(max-width:760px){.planning-page > .page-heading h1{font-size:clamp(1.7rem,8vw,2.15rem)}.upcoming-list button > span{flex-basis:39px}.upcoming-list .ui-status{font-size:.61rem;padding:4px 7px}}
@@ -42,3 +42,36 @@
   .upcoming-list button { grid-template-columns:43px minmax(0,1fr) 74px; column-gap:8px; }
   .upcoming-list .ui-status { min-width:70px; }
 }
+
+/* Intermediate widths reflow before content starts truncating. */
+@media(max-width:1120px) and (min-width:761px){
+  .planning-page > .page-heading { align-items:flex-start; flex-direction:column; }
+  .planning-grid { grid-template-columns:1fr; }
+  .upcoming-list { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .goal-card-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .review-workbench { grid-template-columns:1fr; }
+  .review-workbench .completion-records { border-right:0; border-bottom:1px solid var(--line); }
+}
+@media(max-width:1020px) and (min-width:761px){
+  .page-heading,.goal-hero { align-items:flex-start; flex-direction:column; }
+  .page-heading .button-group,.goal-hero__actions { width:100%; }
+  .page-heading .button-group .ui-button { flex:1; }
+}
+@media(max-width:920px) and (min-width:761px){
+  .today-grid { grid-template-columns:1fr; }
+  .upcoming-list { grid-template-columns:1fr; }
+  .goal-library { grid-template-columns:1fr; }
+  .plan-row { grid-template-columns:108px 20px minmax(0,1fr); }
+  .plan-actions { grid-column:3; justify-content:flex-start; }
+  .plan-row:not(:last-child) .timeline-dot:after { left:119px; }
+}
+@media(max-width:520px){
+  .upcoming-list button { grid-template-columns:42px minmax(0,1fr) 72px; column-gap:7px; padding-left:2px; padding-right:2px; }
+  .upcoming-list button > div strong { font-size:.98rem; line-height:1.25; }
+  .upcoming-list .ui-status { min-width:68px; padding:6px 7px; }
+  .reminder-chip strong { white-space:normal; }
+  .goal-stats { grid-template-columns:1fr 1fr; }
+  .plan-row { grid-template-columns:88px 15px minmax(0,1fr); }
+  .plan-row:not(:last-child) .timeline-dot:after { left:99px; }
+}
+.goal-preview-card h3,.goal-library-card h3,.plan-content h3,.step-row strong,.completion-records strong { overflow-wrap:anywhere; }

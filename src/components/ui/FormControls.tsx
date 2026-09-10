@@ -1,7 +1,16 @@
 import { CalendarDays, Check, ChevronDown, ChevronLeft, ChevronRight, Clock3 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 type Option = { value: string; label: string };
+type Placement = "up" | "down";
+
+function bestPlacement(element: HTMLDivElement | null, panelHeight: number): Placement {
+  if (!element) return "down";
+  const rect = element.getBoundingClientRect();
+  const below = window.innerHeight - rect.bottom;
+  const above = rect.top;
+  return below < panelHeight && above > below ? "up" : "down";
+}
 
 function pad(value: number) {
   return String(value).padStart(2, "0");
@@ -28,6 +37,8 @@ export function DateField({
   ariaLabel?: string;
 }) {
   const [open, setOpen] = useState(false);
+  const [placement, setPlacement] = useState<Placement>("down");
+  const rootRef = useRef<HTMLDivElement>(null);
   const [view, setView] = useState(() => parseDate(value));
   const selected = value ? parseDate(value) : undefined;
   const first = new Date(view.getFullYear(), view.getMonth(), 1);
@@ -39,7 +50,7 @@ export function DateField({
     : "请选择日期";
 
   return (
-    <div className="custom-field custom-date-field">
+    <div ref={rootRef} className={`custom-field custom-date-field opens-${placement}`}>
       <button
         type="button"
         className={`custom-field__trigger ${value ? "has-value" : ""}`}
@@ -49,6 +60,7 @@ export function DateField({
         aria-expanded={open}
         onClick={() => {
           setView(parseDate(value));
+          setPlacement(bestPlacement(rootRef.current, 306));
           setOpen((current) => !current);
         }}
       >
@@ -102,10 +114,12 @@ export function SelectField({
   icon?: "select" | "time";
 }) {
   const [open, setOpen] = useState(false);
+  const [placement, setPlacement] = useState<Placement>("down");
+  const rootRef = useRef<HTMLDivElement>(null);
   const selected = options.find((option) => option.value === value) ?? options[0];
   return (
-    <div className="custom-field custom-select-field">
-      <button type="button" className="custom-field__trigger" aria-label={ariaLabel} aria-haspopup="listbox" aria-expanded={open} onClick={() => setOpen((current) => !current)}>
+    <div ref={rootRef} className={`custom-field custom-select-field opens-${placement}`}>
+      <button type="button" className="custom-field__trigger" aria-label={ariaLabel} aria-haspopup="listbox" aria-expanded={open} onClick={() => { setPlacement(bestPlacement(rootRef.current, Math.min(224, options.length * 35 + 14))); setOpen((current) => !current); }}>
         {icon === "time" ? <Clock3 size={17} /> : null}
         <span>{selected?.label ?? "请选择"}</span>
         <ChevronDown size={16} />
