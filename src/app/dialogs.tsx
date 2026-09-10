@@ -6,7 +6,7 @@ import type {
   LocalDate,
   PlanBlock,
 } from "../domain/models";
-import { Button, Modal } from "../components/ui";
+import { Button, DateField, Modal, SelectField, TimeField } from "../components/ui";
 
 const minuteToTime = (minute?: number) =>
   minute === undefined
@@ -62,14 +62,10 @@ export function GoalDialog({
             placeholder="写下范围或期待的成果"
           />
         </label>
-        <label>
-          关联截止日期（可选）
-          <input
-            type="date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-          />
-        </label>
+        <div className="form-field">
+          <span className="form-label">关联截止日期（可选）</span>
+          <DateField value={dueDate} onChange={setDueDate} ariaLabel="选择目标截止日期" />
+        </div>
         <div className="dialog-actions">
           <Button type="button" tone="quiet" onClick={onClose}>
             取消
@@ -112,6 +108,7 @@ export function EventDialog({
         className="dialog-form"
         onSubmit={async (event) => {
           event.preventDefault();
+          if (!startAt) return;
           await onSubmit({
             title,
             startAt: new Date(`${startAt}T12:00:00`).toISOString(),
@@ -131,39 +128,24 @@ export function EventDialog({
             placeholder="面试、笔试或作业截止"
           />
         </label>
-        <label>
-          日期
-          <input
-            required
-            type="date"
-            value={startAt}
-            onChange={(e) => setStartAt(e.target.value)}
-          />
-        </label>
-        <label>
-          类型
-          <select
-            value={kind}
-            onChange={(e) => setKind(e.target.value as typeof kind)}
-          >
-            <option value="interview">面试</option>
-            <option value="assessment">笔试</option>
-            <option value="deadline">截止日期</option>
-            <option value="personal">个人安排</option>
-            <option value="other">其他</option>
-          </select>
-        </label>
-        <label>
-          关联目标（可选）
-          <select value={goalId} onChange={(e) => setGoalId(e.target.value)}>
-            <option value="">不关联</option>
-            {goals.map((goal) => (
-              <option key={goal.id} value={goal.id}>
-                {goal.title}
-              </option>
-            ))}
-          </select>
-        </label>
+        <div className="form-field">
+          <span className="form-label">日期</span>
+          <DateField required value={startAt} onChange={setStartAt} ariaLabel="选择重要日期" />
+        </div>
+        <div className="form-field">
+          <span className="form-label">类型</span>
+          <SelectField value={kind} ariaLabel="选择日期类型" onChange={(value) => setKind(value as typeof kind)} options={[
+            { value: "interview", label: "面试" }, { value: "assessment", label: "笔试" },
+            { value: "deadline", label: "截止日期" }, { value: "personal", label: "个人安排" },
+            { value: "other", label: "其他" },
+          ]} />
+        </div>
+        <div className="form-field">
+          <span className="form-label">关联目标（可选）</span>
+          <SelectField value={goalId} ariaLabel="选择关联目标" onChange={setGoalId} options={[
+            { value: "", label: "不关联" }, ...goals.map((goal) => ({ value: goal.id, label: goal.title })),
+          ]} />
+        </div>
         <div className="dialog-actions">
           <Button type="button" tone="quiet" onClick={onClose}>
             取消
@@ -307,55 +289,32 @@ export function PlanDialog({
           />
         </label>
         <div className="form-row">
-          <label>
-            日期
-            <input
-              required
-              type="date"
-              value={planDate}
-              onChange={(e) => setPlanDate(e.target.value as LocalDate)}
-            />
-          </label>
-          <label>
-            开始时间
-            <input
-              type="time"
-              value={start}
-              onChange={(e) => setStart(e.target.value)}
-            />
-          </label>
-          <label>
-            结束时间
-            <input
-              type="time"
-              value={end}
-              onChange={(e) => setEnd(e.target.value)}
-            />
-          </label>
+          <div className="form-field">
+            <span className="form-label">日期</span>
+            <DateField required value={planDate} onChange={(value) => setPlanDate(value as LocalDate)} ariaLabel="选择安排日期" />
+          </div>
+          <div className="form-field">
+            <span className="form-label">开始时间</span>
+            <TimeField value={start} onChange={setStart} ariaLabel="选择开始时间" />
+          </div>
+          <div className="form-field">
+            <span className="form-label">结束时间</span>
+            <TimeField value={end} onChange={setEnd} ariaLabel="选择结束时间" />
+          </div>
         </div>
-        <label>
-          所属目标（可选）
-          <select value={goalId} onChange={(e) => setGoalId(e.target.value)}>
-            <option value="">日常或临时安排</option>
-            {goals.map((goal) => (
-              <option key={goal.id} value={goal.id}>
-                {goal.title}
-              </option>
-            ))}
-          </select>
-        </label>
+        <div className="form-field">
+          <span className="form-label">所属目标（可选）</span>
+          <SelectField value={goalId} ariaLabel="选择所属目标" onChange={setGoalId} options={[
+            { value: "", label: "日常或临时安排" }, ...goals.map((goal) => ({ value: goal.id, label: goal.title })),
+          ]} />
+        </div>
         {goalId && (
-          <label>
-            具体步骤（可选）
-            <select value={stepId} onChange={(e) => setStepId(e.target.value)}>
-              <option value="">只关联目标</option>
-              {availableSteps.map((step) => (
-                <option key={step.id} value={step.id}>
-                  {step.title}
-                </option>
-              ))}
-            </select>
-          </label>
+          <div className="form-field">
+            <span className="form-label">具体步骤（可选）</span>
+            <SelectField value={stepId} ariaLabel="选择具体步骤" onChange={setStepId} options={[
+              { value: "", label: "只关联目标" }, ...availableSteps.map((step) => ({ value: step.id, label: step.title })),
+            ]} />
+          </div>
         )}
         <label>
           备注

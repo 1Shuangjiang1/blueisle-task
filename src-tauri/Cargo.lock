@@ -159,7 +159,7 @@ dependencies = [
 
 [[package]]
 name = "blueisle-task"
-version = "0.1.1"
+version = "0.1.5"
 dependencies = [
  "serde",
  "serde_json",

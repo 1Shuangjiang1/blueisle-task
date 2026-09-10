@@ -28,18 +28,17 @@
 .upcoming-list button > div strong, .upcoming-list button > div small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .upcoming-list .ui-status { flex: 0 0 auto; align-self: center; margin-left: 3px; }
 
-.dialog-form input[type="date"], .dialog-form input[type="time"], .date-picker input[type="date"] {
-  appearance: none; -webkit-appearance: none; min-height: 45px; border-radius: 999px;
-  padding: 9px 42px 9px 15px; color: var(--text); background-color: var(--surface-2);
-  background-image: linear-gradient(135deg, transparent 50%, var(--primary) 50%), linear-gradient(45deg, var(--primary) 50%, transparent 50%);
-  background-position: calc(100% - 19px) 50%, calc(100% - 13px) 50%; background-size: 6px 6px, 6px 6px; background-repeat: no-repeat;
-}
-.dialog-form select, .settings-panel select {
-  appearance: none; -webkit-appearance: none; min-height: 45px; border-radius: 999px;
-  padding: 9px 42px 9px 15px; color: var(--text); background-color: var(--surface-2);
-  background-image: linear-gradient(45deg, transparent 50%, var(--primary) 50%), linear-gradient(135deg, var(--primary) 50%, transparent 50%);
-  background-position: calc(100% - 18px) 52%, calc(100% - 12px) 52%; background-size: 6px 6px, 6px 6px; background-repeat: no-repeat;
-}
-.dialog-form input[type="date"]::-webkit-calendar-picker-indicator, .dialog-form input[type="time"]::-webkit-calendar-picker-indicator, .date-picker input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0; position: absolute; right: 0; width: 100%; height: 100%; cursor: pointer; }
-.dialog-form input[type="date"]:focus, .dialog-form input[type="time"]:focus, .dialog-form select:focus { border-color: var(--primary); box-shadow: var(--focus); }
 @media(max-width:760px){.planning-page > .page-heading h1{font-size:clamp(1.7rem,8vw,2.15rem)}.upcoming-list button > span{flex-basis:39px}.upcoming-list .ui-status{font-size:.61rem;padding:4px 7px}}
+
+.upcoming-list button { display:grid; grid-template-columns:48px minmax(0,1fr) 82px; column-gap:12px; }
+.upcoming-list button > span { width:auto; }
+.upcoming-list .ui-status { min-width:78px; justify-content:center; padding:7px 10px; line-height:1; }
+
+.date-picker { padding:5px 7px 5px 12px; }
+.date-picker > svg { flex:0 0 auto; }
+.date-picker .custom-field__trigger { min-height:34px; border:0; background:transparent; box-shadow:none; padding:5px 8px; }
+
+@media(max-width:760px){
+  .upcoming-list button { grid-template-columns:43px minmax(0,1fr) 74px; column-gap:8px; }
+  .upcoming-list .ui-status { min-width:70px; }
+}

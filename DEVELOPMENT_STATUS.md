@@ -1,15 +1,15 @@
 # 蓝屿任务 Next — Development Status
 
 更新时间：2026-09-10（Asia/Shanghai）
-总体状态：in progress — UI 精修 v0.1.4 待发布
-当前里程碑：M6 UI 视觉改造（v0.1.4 GitHub 云端构建中）
+总体状态：in progress — v0.1.5 发布中
+当前里程碑：M6 UI 视觉改造（本地验证完成）
 
 ## Resume here
 
 - 最后完成：Android APK 与 Windows installer 均已产出；本地 Git main 仓库和 Web/Windows/Android checks workflow 已建立。
-- 当前/可能运行：GitHub Actions release workflow 正在构建 v0.1.4 Windows 安装包与更新清单。
-- 精确下一动作：等待当前 v0.1.4 workflow 完成，核验 Release 资产与 latest.json，然后通过应用内检查更新升级或下载新安装包。
-- 远程状态：v0.1.2、v0.1.3 GitHub Release 已成功；v0.1.4 tag 已推送且正在构建。正确的两个 GitHub Secrets 已保存。
+- 当前/可能运行：功能已实现并完成浏览器闭环；准备推送 v0.1.5 tag，触发 Windows 正式包构建。
+- 精确下一动作：提交并推送 v0.1.5，等待 GitHub Actions 完成后核验安装包、签名与 latest.json。
+- 远程状态：v0.1.2、v0.1.3、v0.1.4 已发布。正确的两个 GitHub Secrets 已保存。
 - 若立即中断：先运行 `Get-ChildItem -Force` 检查骨架，再按本文件“精确下一步”继续。
 - 阻塞：无。
 - 远程状态：未修改；未创建 GitHub 仓库，未修改 Supabase。
@@ -86,13 +86,25 @@ M1 验收闭环：创建目标 → 子步骤 → 安排今天 14:00–16:00 → 
 - 目标：将现有简约界面升级为有层次的“蓝白纸感工作台”和更强烈的赛博夜间界面；统一楷体、圆角表单、圆润日历、不会换行的日程时间条，并将回顾页合成一个工作台卡片。
 - 当前步骤：deployed but unverified — v0.1.4 已推送，等待 GitHub 发布完成。
 - 计划验证：运行一次 typecheck 和 production build，然后在浏览器检查今天、规划、回顾及弹窗的桌面/手机布局。
-- 中断后的下一动作：查询 run 34476647698；成功时确认 Release 含 NSIS、.sig、latest.json，失败时读取工作流日志并修复。`r`n
+- 中断后的下一动作：v0.1.4 已成功发布；本节由下方 v0.1.5 修复状态取代。
 ## UI 精修（进行中）
 
 - 当前步骤：verified locally — 规划页对齐、状态标签收缩与圆角 date/time/select 已在浏览器确认；准备发布 v0.1.4。
 - 将修改：`src/styles/app.css`、`src/styles/shell.css`；不修改业务组件或数据。
 - 计划验证：一次 typecheck/build，并在浏览器的规划页面与新增安排弹窗确认桌面和移动布局。
-- 中断后的下一动作：提交 v0.1.4 并推送 tag；等待 GitHub Actions 生成带此次 UI 精修的更新包。`r`n## 已完成
+- 中断后的下一动作：此小节已由下方“UI 控件与交互修复”取代。
+
+## UI 控件与交互修复（已本地验证）
+
+- 当前步骤：verified locally — 自定义月历、选项菜单、时间菜单、提交闭环与布局测量均通过。
+- 已定位：CSS 将原生日历 indicator 扩大为整个控件，可能截获“创建/保存”点击并再次打开日期面板。
+- 将修改：`src/components/ui/FormControls.tsx`、`src/components/ui/index.ts`、`src/app/dialogs.tsx`、`src/features/ReviewPage.tsx`、`src/styles/shell.css`、`src/styles/app.css`、`src-tauri/src/main.rs`。
+- 成功标准：展开后的日期表和选项菜单均为主题化圆角面板；选择日期后可一次提交并关闭弹窗；即将到来三列对齐；Windows 正式版启动不出现控制台窗口。
+- 验证计划：typecheck、production build、浏览器创建日期/目标/安排闭环；检查 Rust release subsystem 配置。
+- 验证结果：页面内原生 date/select 数量均为 0；选择日期后创建目标成功且弹窗关闭；09:00—10:00 安排保存成功；临近日期标签文字完整、水平不溢出、垂直偏差 0；typecheck/build 成功；Rust release check 完成。
+- 中断后的下一动作：推送 v0.1.5 tag并查询 release workflow。
+
+## 已完成
 
 - 创建长期任务。
 - 盘点旧版单文件、Capacitor 安卓工程和 Supabase 同步实验。
