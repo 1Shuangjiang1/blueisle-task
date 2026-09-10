@@ -1,7 +1,7 @@
 # 蓝屿任务 Next — Development Status
 
 更新时间：2026-09-10（Asia/Shanghai）
-总体状态：in progress — UI v0.1.3 发布中
+总体状态：in progress — UI 精修 v0.1.4 待发布
 当前里程碑：M6 UI 视觉改造（v0.1.3 GitHub 云端构建中）
 
 ## Resume here
@@ -86,7 +86,13 @@ M1 验收闭环：创建目标 → 子步骤 → 安排今天 14:00–16:00 → 
 - 目标：将现有简约界面升级为有层次的“蓝白纸感工作台”和更强烈的赛博夜间界面；统一楷体、圆角表单、圆润日历、不会换行的日程时间条，并将回顾页合成一个工作台卡片。
 - 当前步骤：deployed but unverified — v0.1.3 已推送，等待 GitHub 发布完成。
 - 计划验证：运行一次 typecheck 和 production build，然后在浏览器检查今天、规划、回顾及弹窗的桌面/手机布局。
-- 中断后的下一动作：查询 run 34476647698；成功时确认 Release 含 NSIS、.sig、latest.json，失败时读取工作流日志并修复。`r`n## 已完成
+- 中断后的下一动作：查询 run 34476647698；成功时确认 Release 含 NSIS、.sig、latest.json，失败时读取工作流日志并修复。`r`n
+## UI 精修（进行中）
+
+- 当前步骤：verified locally — 规划页对齐、状态标签收缩与圆角 date/time/select 已在浏览器确认；准备发布 v0.1.4。
+- 将修改：`src/styles/app.css`、`src/styles/shell.css`；不修改业务组件或数据。
+- 计划验证：一次 typecheck/build，并在浏览器的规划页面与新增安排弹窗确认桌面和移动布局。
+- 中断后的下一动作：提交 v0.1.4 并推送 tag；等待 GitHub Actions 生成带此次 UI 精修的更新包。`r`n## 已完成
 
 - 创建长期任务。
 - 盘点旧版单文件、Capacitor 安卓工程和 Supabase 同步实验。
@@ -165,6 +171,9 @@ M1 验收闭环：创建目标 → 子步骤 → 安排今天 14:00–16:00 → 
 ## Handoff note
 
 新版工程独立于 `html小应用\蓝屿任务系统.html`。任何接手者先读本文件，只在新工程开发；需要迁移时只读取旧数据结构，不复制历史服务配置或密钥。
+
+
+
 
 
 

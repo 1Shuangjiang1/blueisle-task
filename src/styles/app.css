@@ -14,3 +14,32 @@
 .planning-grid{gap:20px}.calendar-card,.upcoming-card{padding:25px}.calendar-card{overflow:hidden}.calendar-toolbar{padding:0 2px 15px;margin-bottom:7px}.calendar-toolbar h2{font-size:1.38rem}.calendar-week{margin:0 2px 7px}.calendar-week span{padding:8px 5px;font-family:"Microsoft YaHei UI",sans-serif;font-size:.72rem;font-weight:700}.calendar-grid{gap:6px;padding:2px}.calendar-day{min-height:102px;padding:9px;border:1px solid transparent;border-radius:16px;margin:0;background:color-mix(in srgb,var(--surface-2) 55%,transparent);transition:background .18s ease, border-color .18s ease}.calendar-day:hover{background:var(--surface-3);border-color:color-mix(in srgb,var(--primary) 28%,var(--line))}.calendar-day.is-blank{background:transparent}.calendar-day>span{width:27px;height:27px;font-family:"Microsoft YaHei UI",sans-serif;font-size:.8rem}.calendar-day.is-today{background:color-mix(in srgb,var(--primary) 10%,var(--surface-2));border-color:color-mix(in srgb,var(--primary) 30%,var(--line))}.calendar-day.is-today>span{box-shadow:0 4px 12px color-mix(in srgb,var(--primary) 30%,transparent)}.calendar-event{border-left:0;border-radius:8px;background:color-mix(in srgb,var(--accent) 13%,var(--surface));font-size:.72rem;padding:5px 6px;margin:4px 0;transition:transform .16s ease}.calendar-event:hover{transform:translateX(2px);background:color-mix(in srgb,var(--accent) 20%,var(--surface))}.event--deadline{background:color-mix(in srgb,var(--danger) 13%,var(--surface))}.event--assessment{background:color-mix(in srgb,var(--violet) 14%,var(--surface))}.upcoming-list{gap:8px}.upcoming-list button{padding:11px 8px;border:1px solid transparent;border-radius:13px}.upcoming-list button:hover{background:var(--surface-2);border-color:var(--line)}
 .goal-preview-card{border-radius:var(--radius);padding:21px;background:linear-gradient(145deg,var(--surface),var(--surface-2));box-shadow:var(--shadow-soft)}.ui-progress{height:7px}.review-metrics{gap:16px}.goal-stats .surface,.review-metrics .surface{padding:20px;border-radius:var(--radius-sm)}.review-workbench{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:0;overflow:hidden;margin-bottom:17px}.review-workbench .completion-records,.review-workbench .review-form{padding:27px}.review-workbench .completion-records{border-right:1px solid var(--line)}.review-workbench .review-form{background:linear-gradient(135deg,color-mix(in srgb,var(--primary) 5%,transparent),transparent)}.completion-records article{padding:15px 0}.review-form{gap:14px}.review-form textarea{min-height:76px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface-2);font-size:.94rem;line-height:1.5;transition:border-color .16s ease,background .16s ease}.review-form textarea:focus{border-color:var(--primary);background:var(--surface)}.date-picker{border-radius:99px;padding:9px 14px;box-shadow:var(--shadow-soft)}
 @media(max-width:760px){.today-grid{gap:14px}.focus-card,.daily-meter,.schedule,.calendar-card,.upcoming-card{padding:19px}.plan-row{grid-template-columns:96px 17px minmax(0,1fr);gap:9px}.plan-row time{font-size:.73rem}.plan-row:not(:last-child) .timeline-dot:after{left:104px}.plan-actions{grid-column:3}.calendar-grid{gap:3px}.calendar-day{min-height:72px;padding:5px;border-radius:10px}.calendar-day>span{width:23px;height:23px}.calendar-event{font-size:.6rem;padding:3px 4px}.review-workbench{grid-template-columns:1fr}.review-workbench .completion-records{border-right:0;border-bottom:1px solid var(--line)}.review-workbench .completion-records,.review-workbench .review-form{padding:20px}.date-picker{width:100%;justify-content:center}}
+
+/* Planning page alignment and custom field finish */
+@media (min-width: 761px) {
+  .planning-page > .page-heading { align-items: end; flex-wrap: nowrap; }
+  .planning-page > .page-heading > div:first-child { min-width: 0; }
+  .planning-page > .page-heading h1 { white-space: nowrap; font-size: clamp(1.85rem, 2.7vw, 2.5rem); }
+  .planning-page > .page-heading .button-group { flex-wrap: nowrap; flex: 0 0 auto; }
+}
+.upcoming-list button { align-items: center; min-width: 0; }
+.upcoming-list button > span { flex: 0 0 43px; }
+.upcoming-list button > div { min-width: 0; }
+.upcoming-list button > div strong, .upcoming-list button > div small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.upcoming-list .ui-status { flex: 0 0 auto; align-self: center; margin-left: 3px; }
+
+.dialog-form input[type="date"], .dialog-form input[type="time"], .date-picker input[type="date"] {
+  appearance: none; -webkit-appearance: none; min-height: 45px; border-radius: 999px;
+  padding: 9px 42px 9px 15px; color: var(--text); background-color: var(--surface-2);
+  background-image: linear-gradient(135deg, transparent 50%, var(--primary) 50%), linear-gradient(45deg, var(--primary) 50%, transparent 50%);
+  background-position: calc(100% - 19px) 50%, calc(100% - 13px) 50%; background-size: 6px 6px, 6px 6px; background-repeat: no-repeat;
+}
+.dialog-form select, .settings-panel select {
+  appearance: none; -webkit-appearance: none; min-height: 45px; border-radius: 999px;
+  padding: 9px 42px 9px 15px; color: var(--text); background-color: var(--surface-2);
+  background-image: linear-gradient(45deg, transparent 50%, var(--primary) 50%), linear-gradient(135deg, var(--primary) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 52%, calc(100% - 12px) 52%; background-size: 6px 6px, 6px 6px; background-repeat: no-repeat;
+}
+.dialog-form input[type="date"]::-webkit-calendar-picker-indicator, .dialog-form input[type="time"]::-webkit-calendar-picker-indicator, .date-picker input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0; position: absolute; right: 0; width: 100%; height: 100%; cursor: pointer; }
+.dialog-form input[type="date"]:focus, .dialog-form input[type="time"]:focus, .dialog-form select:focus { border-color: var(--primary); box-shadow: var(--focus); }
+@media(max-width:760px){.planning-page > .page-heading h1{font-size:clamp(1.7rem,8vw,2.15rem)}.upcoming-list button > span{flex-basis:39px}.upcoming-list .ui-status{font-size:.61rem;padding:4px 7px}}

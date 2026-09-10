@@ -286,3 +286,16 @@
 .ui-modal { border-radius:calc(var(--radius) + 3px); padding:28px; background:linear-gradient(145deg,var(--surface),var(--surface-2)); }
 .ui-modal > header { padding-bottom:15px; border-bottom:1px solid var(--line); }.dialog-form label{font-size:.9rem}.settings-panel{background:linear-gradient(160deg,var(--surface),var(--surface-2));}.theme-choice button{border-radius:var(--radius-sm);padding:13px}.theme-choice .is-selected{box-shadow:0 6px 18px color-mix(in srgb,var(--primary) 16%,transparent)}
 @media(max-width:760px){.ui-modal{padding:23px 17px calc(23px + env(safe-area-inset-bottom));}}
+
+/* Keep native select chrome out of every dialog and settings panel. */
+.dialog-form select, .settings-panel select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  border-radius: 999px !important;
+  padding: 9px 42px 9px 15px !important;
+  background-color: var(--surface-2) !important;
+  background-image: linear-gradient(45deg, transparent 50%, var(--primary) 50%), linear-gradient(135deg, var(--primary) 50%, transparent 50%) !important;
+  background-position: calc(100% - 18px) 52%, calc(100% - 12px) 52% !important;
+  background-size: 6px 6px, 6px 6px !important;
+  background-repeat: no-repeat !important;
+}
