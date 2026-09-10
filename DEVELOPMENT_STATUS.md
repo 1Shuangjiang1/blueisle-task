@@ -1,15 +1,15 @@
 # 蓝屿任务 Next — Development Status
 
 更新时间：2026-09-10（Asia/Shanghai）
-总体状态：in progress — v0.1.5 发布中
-当前里程碑：M6 UI 视觉改造（本地验证完成）
+总体状态：in progress — v0.1.5 GitHub 云端构建中
+当前里程碑：M6 UI 视觉与交互修复（已推送）
 
 ## Resume here
 
 - 最后完成：Android APK 与 Windows installer 均已产出；本地 Git main 仓库和 Web/Windows/Android checks workflow 已建立。
-- 当前/可能运行：功能已实现并完成浏览器闭环；准备推送 v0.1.5 tag，触发 Windows 正式包构建。
-- 精确下一动作：提交并推送 v0.1.5，等待 GitHub Actions 完成后核验安装包、签名与 latest.json。
-- 远程状态：v0.1.2、v0.1.3、v0.1.4 已发布。正确的两个 GitHub Secrets 已保存。
+- 当前/可能运行：GitHub Actions release run 34482708764 正在构建 v0.1.5 Windows 正式包；本地隐藏预览服务准备停止。
+- 精确下一动作：等待 run 34482708764 完成，核验安装包、签名与 latest.json；若失败则读取具体步骤日志修复。
+- 远程状态：v0.1.2、v0.1.3、v0.1.4 已发布；v0.1.5 tag 与代码已推送。正确的两个 GitHub Secrets 已保存。
 - 若立即中断：先运行 `Get-ChildItem -Force` 检查骨架，再按本文件“精确下一步”继续。
 - 阻塞：无。
 - 远程状态：未修改；未创建 GitHub 仓库，未修改 Supabase。
