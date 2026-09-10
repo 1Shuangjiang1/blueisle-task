@@ -2,14 +2,14 @@
 
 更新时间：2026-09-10（Asia/Shanghai）
 总体状态：in progress
-当前里程碑：M4 多端同步（M2 更新发布与 M3 真机验收待外部配置）
+当前里程碑：M5 Windows 在线更新发布（0.1.2 workflow 待触发）
 
 ## Resume here
 
 - 最后完成：Android APK 与 Windows installer 均已产出；本地 Git main 仓库和 Web/Windows/Android checks workflow 已建立。
-- 当前/可能运行：GitHub 公开仓库已创建并推送 main；Actions 的私钥与口令 secrets 已配置并核对存在。0.1.1 本地签名安装包 SHA256 `C7CA09336ACA75B2A8A758C21B03608CED9B67F50184BCFDE83D51B9B693F804`，对应 `.sig` 424 bytes。
-- 精确下一动作：提交并推送本状态，再创建并推送 `v0.1.1` tag 触发 release workflow；观察工作流到 release 与 `latest.json` 均生成。
-- 远程状态：`https://github.com/1Shuangjiang1/blueisle-task` 为公开仓库，main 已推送，两个签名 Secrets 已配置；尚无 tag/release。
+- 当前/可能运行：0.1.1 workflow 已成功并上传 NSIS 与签名，但未上传 latest.json；正在修正 release workflow 的 updater JSON 输入，准备发布 0.1.2。
+- 精确下一动作：改用 tauri-action v1 的 uploadUpdaterJson/updaterJsonPreferNsis 设置，提升版本到 0.1.2，提交并推送 tag，随后核验 latest.json。
+- 远程状态：公开仓库/main/v0.1.1 tag 已存在且 release 成功，含 NSIS 与 .sig；缺少 latest.json，故当前在线更新不可用。正确的两个 GitHub Secrets 已保存。
 - 若立即中断：先运行 `Get-ChildItem -Force` 检查骨架，再按本文件“精确下一步”继续。
 - 阻塞：无。
 - 远程状态：未修改；未创建 GitHub 仓库，未修改 Supabase。
@@ -74,11 +74,11 @@ M1 验收闭环：创建目标 → 子步骤 → 安排今天 14:00–16:00 → 
 
 步骤：M5 Windows 应用内更新与 GitHub Releases。
 
-- 状态：in progress；Tauri updater/process 前后端依赖已安装，运行时与发布端点尚未接线。
+- 状态：in progress；0.1.1 发布已证实签名有效但缺少更新清单；workflow 已切换至 tauri-action v1 并显式生成 NSIS 更新清单，待 0.1.2 远程验证。
 - 即将修改：`src-tauri/src/lib.rs`、`src-tauri/capabilities/default.json`、`src-tauri/tauri.conf.json`、`src/update/**`、`src/app/App.tsx`、GitHub Actions release workflow。
 - 计划验证：`npm run typecheck`、一次 `npm run tauri build`，确认安装包、签名文件与更新清单产物。
-- 中断后的下一动作：先查询已安装插件的权限名与 signer CLI 参数，然后完成上述四处运行时配置。
-- 中断后的下一动作：运行类型检查；然后设置 `TAURI_SIGNING_PRIVATE_KEY_PATH=.secrets/tauri-updater.key` 并构建 Windows 安装包。
+- 中断后的下一动作：提交并推送 0.1.2 与 tag，监视 GitHub Actions，随后请求公开 latest.json。
+- 中断后的下一动作：若 0.1.2 workflow 成功，验证 GitHub Release 资产含 latest.json，Windows 平台 URL 指向 NSIS 安装包。
 
 ## 已完成
 
@@ -159,3 +159,6 @@ M1 验收闭环：创建目标 → 子步骤 → 安排今天 14:00–16:00 → 
 ## Handoff note
 
 新版工程独立于 `html小应用\蓝屿任务系统.html`。任何接手者先读本文件，只在新工程开发；需要迁移时只读取旧数据结构，不复制历史服务配置或密钥。
+
+
+

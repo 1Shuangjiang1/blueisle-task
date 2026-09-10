@@ -1,6 +1,6 @@
 [package]
 name = "blueisle-task"
-version = "0.1.1"
+version = "0.1.2"
 description = "蓝屿任务：个人规划与每日执行系统"
 authors = ["BlueIsle"]
 edition = "2021"
@@ -20,3 +20,4 @@ tauri-plugin-process = "2.3.1"
 
 [target."cfg(windows)".dependencies]
 tauri-plugin-updater = "2.11.0"
+
