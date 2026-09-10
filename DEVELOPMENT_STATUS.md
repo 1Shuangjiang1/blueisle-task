@@ -2,14 +2,14 @@
 
 更新时间：2026-09-10（Asia/Shanghai）
 总体状态：in progress
-当前里程碑：M5 Windows 在线更新发布（0.1.2 GitHub 云端构建中）
+当前里程碑：M5 Windows 在线更新发布（v0.1.2 已发布并验证）
 
 ## Resume here
 
 - 最后完成：Android APK 与 Windows installer 均已产出；本地 Git main 仓库和 Web/Windows/Android checks workflow 已建立。
-- 当前/可能运行：0.1.2 tag 已推送，GitHub Actions release workflow run 34465479047 正在构建。
-- 精确下一动作：等待 run 34465479047 完成，确认 v0.1.2 Release 同时含 NSIS、.sig 与 latest.json，并读取更新清单验证链接。
-- 远程状态：v0.1.1 release 已成功但仅含 NSIS 与 .sig；v0.1.2 tag 已推送并正在用修正后的 workflow 构建。正确的两个 GitHub Secrets 已保存。
+- 当前/可能运行：无。v0.1.2 release 已发布，更新清单、Windows NSIS 安装包和签名文件均可公开下载。
+- 精确下一动作：用户在首台 Windows 电脑安装 v0.1.2，注册或登录账号；再在其他设备用同一账号登录，以完成跨设备实际使用验收。
+- 远程状态：v0.1.2 GitHub Release 已成功，含 latest.json、Windows NSIS 与 .sig；Windows 应用内更新端点可用。正确的两个 GitHub Secrets 已保存。
 - 若立即中断：先运行 `Get-ChildItem -Force` 检查骨架，再按本文件“精确下一步”继续。
 - 阻塞：无。
 - 远程状态：未修改；未创建 GitHub 仓库，未修改 Supabase。
@@ -159,6 +159,7 @@ M1 验收闭环：创建目标 → 子步骤 → 安排今天 14:00–16:00 → 
 ## Handoff note
 
 新版工程独立于 `html小应用\蓝屿任务系统.html`。任何接手者先读本文件，只在新工程开发；需要迁移时只读取旧数据结构，不复制历史服务配置或密钥。
+
 
 
 
