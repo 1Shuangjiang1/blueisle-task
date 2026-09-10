@@ -2,14 +2,14 @@
 
 更新时间：2026-09-10（Asia/Shanghai）
 总体状态：in progress
-当前里程碑：M5 Windows 在线更新发布（0.1.2 workflow 待触发）
+当前里程碑：M5 Windows 在线更新发布（0.1.2 GitHub 云端构建中）
 
 ## Resume here
 
 - 最后完成：Android APK 与 Windows installer 均已产出；本地 Git main 仓库和 Web/Windows/Android checks workflow 已建立。
-- 当前/可能运行：0.1.1 workflow 已成功并上传 NSIS 与签名，但未上传 latest.json；正在修正 release workflow 的 updater JSON 输入，准备发布 0.1.2。
-- 精确下一动作：改用 tauri-action v1 的 uploadUpdaterJson/updaterJsonPreferNsis 设置，提升版本到 0.1.2，提交并推送 tag，随后核验 latest.json。
-- 远程状态：公开仓库/main/v0.1.1 tag 已存在且 release 成功，含 NSIS 与 .sig；缺少 latest.json，故当前在线更新不可用。正确的两个 GitHub Secrets 已保存。
+- 当前/可能运行：0.1.2 tag 已推送，GitHub Actions release workflow run 34465479047 正在构建。
+- 精确下一动作：等待 run 34465479047 完成，确认 v0.1.2 Release 同时含 NSIS、.sig 与 latest.json，并读取更新清单验证链接。
+- 远程状态：v0.1.1 release 已成功但仅含 NSIS 与 .sig；v0.1.2 tag 已推送并正在用修正后的 workflow 构建。正确的两个 GitHub Secrets 已保存。
 - 若立即中断：先运行 `Get-ChildItem -Force` 检查骨架，再按本文件“精确下一步”继续。
 - 阻塞：无。
 - 远程状态：未修改；未创建 GitHub 仓库，未修改 Supabase。
@@ -159,6 +159,8 @@ M1 验收闭环：创建目标 → 子步骤 → 安排今天 14:00–16:00 → 
 ## Handoff note
 
 新版工程独立于 `html小应用\蓝屿任务系统.html`。任何接手者先读本文件，只在新工程开发；需要迁移时只读取旧数据结构，不复制历史服务配置或密钥。
+
+
 
 
 
