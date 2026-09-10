@@ -32,6 +32,9 @@
 
 .calendar-day[role="button"] { cursor:pointer; }
 .calendar-day[role="button"]:focus-visible { outline:none; border-color:color-mix(in srgb,var(--primary) 48%,var(--line)); box-shadow:0 5px 16px color-mix(in srgb,var(--primary) 12%,transparent); }
+.calendar-event { display:-webkit-box; white-space:normal; overflow:hidden; text-overflow:ellipsis; -webkit-box-orient:vertical; -webkit-line-clamp:2; line-clamp:2; line-height:1.3; overflow-wrap:anywhere; }
+.calendar-entry-count { display:none; }
+@media(max-width:390px){.calendar-entry-count{display:block;margin-top:2px;color:var(--primary)!important;font-weight:750}.calendar-day>small:not(.calendar-entry-count){display:none}}
 
 .upcoming-list button { display:grid; grid-template-columns:48px minmax(0,1fr) 82px; column-gap:12px; }
 .upcoming-list button > span { width:auto; }

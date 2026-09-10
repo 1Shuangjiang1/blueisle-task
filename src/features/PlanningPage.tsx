@@ -125,7 +125,8 @@ export function PlanningPage({
                         <button
                           key={event.id}
                           className={`calendar-event event--${event.kind}`}
-                          onClick={(clickEvent) => { clickEvent.stopPropagation(); onOpenEvent?.(event); }}
+                          title={event.title}
+                          onClick={(clickEvent) => { clickEvent.stopPropagation(); onOpenDay?.(key as LocalDate); }}
                         >
                           {event.title}
                         </button>
@@ -133,6 +134,7 @@ export function PlanningPage({
                       {entries.length > 2 && (
                         <small>+{entries.length - 2} 项</small>
                       )}
+                      {entries.length > 0 && <small className="calendar-entry-count">{entries.length} 项事项</small>}
                     </>
                   )}
                 </div>

@@ -1,19 +1,27 @@
 # 蓝屿任务 Next — Development Status
 
 更新时间：2026-09-11（Asia/Shanghai）
-总体状态：complete — v0.1.8 日历日期详情已发布
-当前里程碑：M9 日期内容查看完成
+总体状态：in progress — 日历长标题适配
+当前里程碑：M10 月历信息可读性
 
 ## Resume here
 
-- 最后完成：v0.1.7 删除闭环已发布。
-- 当前/可能运行：无；本地预览服务已停止，v0.1.8 发布完成。
-- 精确下一动作：用户在应用设置中检查更新至 v0.1.8，并实际使用月历日期详情。
-- 预计修改：`src/features/PlanningPage.tsx`、`src/features/types.ts`、`src/app/App.tsx`、`src/app/dialogs.tsx`、相关样式。
-- 计划验证：空日期与有内容日期均可打开；当天日期/事件/安排显示正确；事件与安排可继续编辑；新增事项自动带入所选日期；typecheck/build 与浏览器检查。
+- 最后完成：v0.1.8 日期详情已发布。
+- 当前/可能运行：M10 长标题适配 verified locally；准备发布 v0.1.9。
+- 精确下一动作：提交并推送 main 与 v0.1.9 tag，等待 GitHub Release 构建完成。
+- 预计修改：`src/features/PlanningPage.tsx`、`src/styles/app.css`。
+- 计划验证：桌面两行截断、点击进入当天详情、手机宽度显示事项数量、typecheck/build。
 - 远程状态：main commit `f8e35b2` 与 tag `v0.1.8` 已推送；release run `34517233413` success，Release 资产完整。
 - 若立即中断：先运行 `Get-ChildItem -Force` 检查骨架，再按本文件“精确下一步”继续。
 - 阻塞：无。
+
+## M10 月历长标题适配
+
+- 状态：verified locally；准备发布 v0.1.9。
+- 目标：长事项名称在月历中保留更多有效信息，同时不撑坏七列布局；完整名称始终能在日期详情中查看。
+- 已实现：桌面和平板的月历标题最多显示两行；点击标题打开当天详情查看完整名称；390px 以下窄屏显示当天事项数量。
+- 最新验证：`npm run typecheck` 与 `npm run build` 通过，仅有既存的大包体积提示。
+- 中断后的下一动作：发布 v0.1.9，核验在线更新资产。
 
 ## M9 日历日期详情
 
