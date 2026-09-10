@@ -10,6 +10,7 @@ import { EmptyState } from "../components/ui/EmptyState";
 import { Progress } from "../components/ui/Progress";
 import { StatusPill } from "../components/ui/StatusPill";
 import type { PlanningPageProps } from "./types";
+import type { LocalDate } from "../domain/models";
 
 const week = ["一", "二", "三", "四", "五", "六", "日"];
 const ymd = (date: Date) =>
@@ -23,6 +24,7 @@ export function PlanningPage({
   onMonthChange,
   onAddEvent,
   onOpenEvent,
+  onOpenDay,
   onAddGoal,
   onOpenGoal,
 }: PlanningPageProps) {
@@ -105,6 +107,16 @@ export function PlanningPage({
                 <div
                   className={`calendar-day ${!key ? "is-blank" : ""} ${today ? "is-today" : ""}`}
                   key={`${day}-${index}`}
+                  role={key ? "button" : undefined}
+                  tabIndex={key ? 0 : undefined}
+                  aria-label={key ? `查看 ${key} 的安排` : undefined}
+                  onClick={() => key && onOpenDay?.(key as LocalDate)}
+                  onKeyDown={(event) => {
+                    if (key && (event.key === "Enter" || event.key === " ")) {
+                      event.preventDefault();
+                      onOpenDay?.(key as LocalDate);
+                    }
+                  }}
                 >
                   {key && (
                     <>
@@ -113,7 +125,7 @@ export function PlanningPage({
                         <button
                           key={event.id}
                           className={`calendar-event event--${event.kind}`}
-                          onClick={() => onOpenEvent?.(event)}
+                          onClick={(clickEvent) => { clickEvent.stopPropagation(); onOpenEvent?.(event); }}
                         >
                           {event.title}
                         </button>

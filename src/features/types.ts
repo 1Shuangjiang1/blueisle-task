@@ -38,6 +38,7 @@ export interface PlanningPageProps {
   onMonthChange?: (month: Date) => void;
   onAddEvent?: () => void;
   onOpenEvent?: (event: CalendarEvent) => void;
+  onOpenDay?: (date: LocalDate) => void;
   onAddGoal?: () => void;
   onOpenGoal?: (goalId: string) => void;
 }

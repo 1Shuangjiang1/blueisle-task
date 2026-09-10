@@ -28,6 +28,7 @@ import { AppShell, type AppView } from "../components/layout/AppShell";
 import {
   CompleteDialog,
   ConfirmDeleteDialog,
+  DayDetailDialog,
   EventDialog,
   GoalDialog,
   PlanDialog,
@@ -62,11 +63,12 @@ type DeleteTarget =
   | { kind: "plan"; item: PlanBlock };
 type Dialog =
   | { type: "goal" }
-  | { type: "event"; editing?: CalendarEvent }
+  | { type: "event"; editing?: CalendarEvent; initialDate?: LocalDate }
   | { type: "plan"; preset?: Partial<PlanBlock>; editing?: PlanBlock }
   | { type: "complete"; plan: PlanBlock }
   | { type: "step"; goalId: string; parentStepId?: string; editing?: GoalStep }
   | { type: "delete"; target: DeleteTarget }
+  | { type: "day"; date: LocalDate }
   | null;
 
 export function App() {
@@ -429,6 +431,7 @@ export function App() {
           onMonthChange={setMonth}
           onAddEvent={() => setDialog({ type: "event" })}
           onOpenEvent={(editing) => setDialog({ type: "event", editing })}
+          onOpenDay={(date) => setDialog({ type: "day", date })}
           onAddGoal={() => setDialog({ type: "goal" })}
           onOpenGoal={openGoal}
         />
@@ -621,6 +624,7 @@ export function App() {
         <EventDialog
           goals={goals}
           editing={dialog.editing}
+          initialDate={dialog.initialDate}
           onClose={() => setDialog(null)}
           onDelete={dialog.editing ? () => setDialog({ type: "delete", target: { kind: "event", item: dialog.editing! } }) : undefined}
           onSubmit={(value) =>
@@ -629,6 +633,18 @@ export function App() {
               dialog.editing ? "重要日期已更新" : "重要日期已添加",
             )
           }
+        />
+      )}{" "}
+      {dialog?.type === "day" && (
+        <DayDetailDialog
+          date={dialog.date}
+          events={events.filter((event) => event.startAt.slice(0, 10) === dialog.date)}
+          plans={plans.filter((plan) => plan.date === dialog.date)}
+          onClose={() => setDialog(null)}
+          onAddEvent={() => setDialog({ type: "event", initialDate: dialog.date })}
+          onAddPlan={() => setDialog({ type: "plan", preset: { date: dialog.date } })}
+          onOpenEvent={(editing) => setDialog({ type: "event", editing })}
+          onOpenPlan={(editing) => setDialog({ type: "plan", editing })}
         />
       )}{" "}
       {dialog?.type === "plan" && (

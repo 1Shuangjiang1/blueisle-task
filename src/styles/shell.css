@@ -159,6 +159,20 @@
 .dialog-actions .delete-action { margin-right: auto; }
 .delete-confirm { display:grid; gap:18px; }
 .delete-confirm p { margin:0; color:var(--muted); line-height:1.75; }
+.day-detail { display:grid; gap:20px; }
+.day-detail section { display:grid; gap:10px; }
+.day-detail section + section { padding-top:18px; border-top:1px solid var(--line); }
+.day-detail__heading { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.day-detail__list { display:grid; gap:7px; }
+.day-detail__list > button { width:100%; display:grid; grid-template-columns:auto minmax(0,1fr); align-items:center; gap:11px; padding:11px 12px; border:1px solid var(--line); border-radius:13px; background:var(--surface-2); color:var(--text); text-align:left; }
+.day-detail__list > button:hover { border-color:color-mix(in srgb,var(--primary) 45%,var(--line)); background:var(--surface-3); }
+.day-detail__list div { min-width:0; display:grid; gap:3px; }
+.day-detail__list small { color:var(--muted); }
+.day-detail__list time { min-width:48px; color:var(--primary); font:700 .76rem "Microsoft YaHei UI",sans-serif; }
+.day-detail__dot { width:10px; height:10px; border-radius:50%; background:var(--accent); }
+.day-detail__dot.event--deadline { background:var(--danger); }
+.day-detail__dot.event--assessment { background:var(--violet); }
+.day-detail__empty { margin:0; padding:13px; border-radius:12px; background:var(--surface-2); color:var(--muted); font-size:.86rem; }
 .app-toast {
   position: fixed;
   left: calc(50% + 109px);

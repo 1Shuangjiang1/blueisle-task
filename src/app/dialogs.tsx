@@ -82,12 +82,14 @@ export function GoalDialog({
 export function EventDialog({
   goals,
   editing,
+  initialDate,
   onClose,
   onDelete,
   onSubmit,
 }: {
   goals: Goal[];
   editing?: CalendarEvent;
+  initialDate?: LocalDate;
   onClose: () => void;
   onDelete?: () => void;
   onSubmit: (value: {
@@ -99,7 +101,7 @@ export function EventDialog({
   }) => Promise<void>;
 }) {
   const [title, setTitle] = useState(editing?.title ?? "");
-  const [startAt, setStartAt] = useState(editing?.startAt.slice(0, 10) ?? "");
+  const [startAt, setStartAt] = useState(editing?.startAt.slice(0, 10) ?? initialDate ?? "");
   const [kind, setKind] = useState<
     "interview" | "assessment" | "deadline" | "personal" | "other"
   >(editing?.kind ?? "deadline");
@@ -160,6 +162,37 @@ export function EventDialog({
       </form>
     </Modal>
   );
+}
+
+export function DayDetailDialog({ date, events, plans, onClose, onAddEvent, onAddPlan, onOpenEvent, onOpenPlan }: {
+  date: LocalDate;
+  events: CalendarEvent[];
+  plans: PlanBlock[];
+  onClose: () => void;
+  onAddEvent: () => void;
+  onAddPlan: () => void;
+  onOpenEvent: (event: CalendarEvent) => void;
+  onOpenPlan: (plan: PlanBlock) => void;
+}) {
+  const dateTitle = new Intl.DateTimeFormat("zh-CN", { month: "long", day: "numeric", weekday: "long" })
+    .format(new Date(`${date}T12:00:00`));
+  const orderedPlans = [...plans].sort((a, b) => (a.startMinute ?? 1441) - (b.startMinute ?? 1441) || a.order - b.order);
+  return <Modal title={dateTitle} onClose={onClose}>
+    <div className="day-detail">
+      <section>
+        <div className="day-detail__heading"><strong>重要日期</strong><Button size="sm" onClick={onAddEvent}>添加日期</Button></div>
+        {events.length ? <div className="day-detail__list">{events.map((event) =>
+          <button key={event.id} onClick={() => onOpenEvent(event)}><span className={`day-detail__dot event--${event.kind}`} /><div><strong>{event.title}</strong><small>{event.kind === "interview" ? "面试" : event.kind === "assessment" ? "笔试" : event.kind === "deadline" ? "截止日期" : "重要安排"}</small></div></button>
+        )}</div> : <p className="day-detail__empty">这一天没有重要日期。</p>}
+      </section>
+      <section>
+        <div className="day-detail__heading"><strong>当天安排</strong><Button size="sm" tone="primary" onClick={onAddPlan}>添加安排</Button></div>
+        {orderedPlans.length ? <div className="day-detail__list">{orderedPlans.map((plan) =>
+          <button key={plan.id} onClick={() => onOpenPlan(plan)}><time>{plan.startMinute === undefined ? "待安排" : minuteToTime(plan.startMinute)}</time><div><strong>{plan.title}</strong><small>{plan.status === "completed" ? "已完成" : plan.status === "cancelled" ? "已取消" : "计划中"}</small></div></button>
+        )}</div> : <p className="day-detail__empty">这一天还没有具体安排。</p>}
+      </section>
+    </div>
+  </Modal>;
 }
 
 export function StepDialog({
