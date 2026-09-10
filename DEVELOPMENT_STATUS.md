@@ -7,9 +7,9 @@
 ## Resume here
 
 - 最后完成：Android APK 与 Windows installer 均已产出；本地 Git main 仓库和 Web/Windows/Android checks workflow 已建立。
-- 当前/可能运行：0.1.1 Windows updater 构建 verified locally；初始提交 `51a54d9` 已创建。公开 GitHub 仓库 `1Shuangjiang1/blueisle-task` 已创建但还是空仓库；即将首次推送。
-- 精确下一动作：添加 origin 并推送 main；随后配置 Actions signing secrets 并推送 v0.1.1 tag 触发正式 release。
-- 远程状态：GitHub 公开仓库已创建；尚无代码、tag、release 或 secrets。
+- 当前/可能运行：GitHub 公开仓库已创建并推送 main；Actions 的私钥与口令 secrets 已配置并核对存在。0.1.1 本地签名安装包 SHA256 `C7CA09336ACA75B2A8A758C21B03608CED9B67F50184BCFDE83D51B9B693F804`，对应 `.sig` 424 bytes。
+- 精确下一动作：提交并推送本状态，再创建并推送 `v0.1.1` tag 触发 release workflow；观察工作流到 release 与 `latest.json` 均生成。
+- 远程状态：`https://github.com/1Shuangjiang1/blueisle-task` 为公开仓库，main 已推送，两个签名 Secrets 已配置；尚无 tag/release。
 - 若立即中断：先运行 `Get-ChildItem -Force` 检查骨架，再按本文件“精确下一步”继续。
 - 阻塞：无。
 - 远程状态：未修改；未创建 GitHub 仓库，未修改 Supabase。
