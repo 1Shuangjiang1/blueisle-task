@@ -7,8 +7,9 @@
 ## Resume here
 
 - 最后完成：Android APK 与 Windows installer 均已产出；本地 Git main 仓库和 Web/Windows/Android checks workflow 已建立。
-- 当前/可能运行：0.1.1 Windows updater 构建 verified locally；NSIS 与对应 `.sig` 均已生成。构建进程已结束，远程状态未变。
-- 精确下一动作：核对 Git 忽略规则与产物哈希，更新发布说明并创建初始提交；随后创建公开 GitHub 仓库、配置 Actions secrets、推送并发布 0.1.1。
+- 当前/可能运行：0.1.1 Windows updater 构建 verified locally；初始提交 `51a54d9` 已创建。公开 GitHub 仓库 `1Shuangjiang1/blueisle-task` 已创建但还是空仓库；即将首次推送。
+- 精确下一动作：添加 origin 并推送 main；随后配置 Actions signing secrets 并推送 v0.1.1 tag 触发正式 release。
+- 远程状态：GitHub 公开仓库已创建；尚无代码、tag、release 或 secrets。
 - 若立即中断：先运行 `Get-ChildItem -Force` 检查骨架，再按本文件“精确下一步”继续。
 - 阻塞：无。
 - 远程状态：未修改；未创建 GitHub 仓库，未修改 Supabase。
