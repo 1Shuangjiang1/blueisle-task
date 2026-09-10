@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">蓝屿任务</string>
+    <string name="title_activity_main">蓝屿任务</string>
+    <string name="package_name">com.blueisle.tasks</string>
+    <string name="custom_url_scheme">com.blueisle.tasks</string>
+</resources>

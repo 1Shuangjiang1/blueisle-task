@@ -1,0 +1,22 @@
+[package]
+name = "blueisle-task"
+version = "0.1.1"
+description = "蓝屿任务：个人规划与每日执行系统"
+authors = ["BlueIsle"]
+edition = "2021"
+
+[lib]
+name = "blueisle_task_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri-plugin-process = "2.3.1"
+
+[target."cfg(windows)".dependencies]
+tauri-plugin-updater = "2.11.0"

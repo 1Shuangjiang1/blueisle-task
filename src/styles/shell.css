@@ -1,0 +1,275 @@
+.app-shell {
+  min-height: 100dvh;
+}
+.app-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 218px;
+  padding: 24px 14px;
+  display: flex;
+  flex-direction: column;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border-right: 1px solid var(--line);
+  backdrop-filter: blur(18px);
+  z-index: 5;
+}
+.app-content {
+  min-height: 100dvh;
+  margin-left: 218px;
+}
+.brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 0 8px 28px;
+}
+.brand-mark > span {
+  display: grid;
+  place-items: center;
+  width: 39px;
+  height: 39px;
+  border-radius: 12px;
+  background: var(--primary);
+  color: var(--primary-ink);
+  font:
+    900 0.78rem ui-monospace,
+    monospace;
+  box-shadow: 0 0 22px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+.brand-mark div {
+  display: grid;
+  gap: 3px;
+}
+.brand-mark small {
+  color: var(--muted);
+  font-size: 0.66rem;
+}
+.app-sidebar nav {
+  display: grid;
+  gap: 6px;
+}
+.app-sidebar nav button,
+.settings-trigger {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  min-height: 43px;
+  padding: 0 13px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 720;
+  text-align: left;
+}
+.app-sidebar nav button:hover,
+.settings-trigger:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+.app-sidebar nav button.is-active {
+  background: color-mix(in srgb, var(--primary) 12%, var(--surface));
+  border-color: color-mix(in srgb, var(--primary) 32%, var(--line));
+  color: var(--primary);
+}
+.settings-trigger {
+  margin-top: auto;
+}
+.bottom-nav {
+  display: none;
+}
+.panel-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  border: 0;
+  background: rgba(3, 8, 18, 0.45);
+  backdrop-filter: blur(2px);
+}
+.settings-panel {
+  z-index: 10;
+}
+.ui-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(3, 8, 18, 0.55);
+  backdrop-filter: blur(5px);
+}
+.ui-modal {
+  width: min(560px, 100%);
+  max-height: calc(100dvh - 36px);
+  overflow: auto;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
+}
+.ui-modal > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.dialog-form {
+  display: grid;
+  gap: 14px;
+}
+.dialog-form label {
+  display: grid;
+  gap: 6px;
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 720;
+}
+.dialog-form input,
+.dialog-form textarea,
+.dialog-form select {
+  width: 100%;
+  min-height: 41px;
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface-2);
+  color: var(--text);
+}
+.dialog-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 9px;
+}
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 5px;
+}
+.app-toast {
+  position: fixed;
+  left: calc(50% + 109px);
+  bottom: 24px;
+  z-index: 30;
+  transform: translateX(-50%);
+  padding: 10px 15px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  background: var(--text);
+  color: var(--surface);
+  box-shadow: var(--shadow);
+  font-size: 0.82rem;
+  font-weight: 720;
+}
+.loading-screen {
+  min-height: 100dvh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 13px;
+  color: var(--muted);
+}
+.loading-screen span {
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--line);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+[data-reduce-motion="true"] * {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+}
+.settings-panel .ui-button {
+  justify-content: flex-start;
+}
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+@media (max-width: 900px) {
+  .app-sidebar {
+    width: 184px;
+  }
+  .app-content {
+    margin-left: 184px;
+  }
+  .app-toast {
+    left: calc(50% + 92px);
+  }
+}
+@media (max-width: 760px) {
+  .app-sidebar {
+    display: none;
+  }
+  .app-content {
+    margin-left: 0;
+  }
+  .bottom-nav {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 8;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 7px max(8px, env(safe-area-inset-right))
+      calc(7px + env(safe-area-inset-bottom))
+      max(8px, env(safe-area-inset-left));
+    border-top: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface) 94%, transparent);
+    backdrop-filter: blur(17px);
+  }
+  .bottom-nav button {
+    display: grid;
+    justify-items: center;
+    gap: 3px;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    padding: 4px;
+    font-size: 0.64rem;
+  }
+  .bottom-nav button.is-active {
+    color: var(--primary);
+  }
+  .app-toast {
+    left: 50%;
+    bottom: 76px;
+  }
+  .ui-modal-backdrop {
+    align-items: end;
+    padding: 0;
+  }
+  .ui-modal {
+    width: 100%;
+    max-height: 90dvh;
+    border-radius: 20px 20px 0 0;
+    padding: 20px 17px calc(20px + env(safe-area-inset-bottom));
+  }
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .form-row label:first-child {
+    grid-column: span 2;
+  }
+}

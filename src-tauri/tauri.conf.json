@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "蓝屿任务",
+  "version": "0.1.1",
+  "identifier": "com.blueisle.tasks",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://127.0.0.1:4173",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [{
+      "label": "main",
+      "title": "蓝屿任务",
+      "width": 1280,
+      "height": 820,
+      "minWidth": 360,
+      "minHeight": 640,
+      "center": true,
+      "resizable": true
+    }],
+    "security": {
+      "csp": "default-src 'self' customprotocol: asset:; connect-src 'self' ipc: http://ipc.localhost https://*.supabase.co wss://*.supabase.co; img-src 'self' asset: http://asset.localhost blob: data:; style-src 'self' 'unsafe-inline'; font-src 'self' data:"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "createUpdaterArtifacts": true,
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.ico"],
+    "shortDescription": "把长期目标放进每天的时间里",
+    "windows": { "nsis": { "installMode": "currentUser" } }
+  },
+  "plugins": {
+    "updater": {
+      "endpoints": ["https://github.com/1Shuangjiang1/blueisle-task/releases/latest/download/latest.json"],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEI2RkZDRkM3Q0ZBMTIyQzUKUldURklxSFB4OC8vdGdYeWRwd1BvWGoway9UVkhlbXoyNmhwZ0pxRHU5VmJTaEM4V3NYbWZoL0wK",
+      "windows": { "installMode": "passive" }
+    }
+  }
+}
