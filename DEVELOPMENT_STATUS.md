@@ -1,15 +1,15 @@
 # 蓝屿任务 Next — Development Status
 
 更新时间：2026-09-10（Asia/Shanghai）
-总体状态：in progress — v0.1.6 发布准备
-当前里程碑：M7 响应式适配（本地验证完成）
+总体状态：in progress — v0.1.6 GitHub 云端构建中
+当前里程碑：M7 响应式适配（已推送）
 
 ## Resume here
 
 - 最后完成：Android APK 与 Windows installer 均已产出；本地 Git main 仓库和 Web/Windows/Android checks workflow 已建立。
-- 当前/可能运行：v0.1.6 响应式改动已实现；隐藏预览服务 PID 76268 仍在运行，验证结束后需停止。
-- 精确下一动作：完成最后一次 typecheck/build，停止预览服务，提交并推送 v0.1.6 tag。
-- 远程状态：v0.1.2 至 v0.1.5 均已成功发布。正确的两个 GitHub Secrets 已保存。
+- 当前/可能运行：GitHub Actions release run 34484843853 正在构建 v0.1.6；本地预览服务已停止。
+- 精确下一动作：等待 run 34484843853 完成，核验 latest.json、NSIS 与签名文件。
+- 远程状态：v0.1.2 至 v0.1.5 均已成功发布；v0.1.6 tag 与代码已推送。正确的两个 GitHub Secrets 已保存。
 - 若立即中断：先运行 `Get-ChildItem -Force` 检查骨架，再按本文件“精确下一步”继续。
 - 阻塞：无。
 - 远程状态：未修改；未创建 GitHub 仓库，未修改 Supabase。
