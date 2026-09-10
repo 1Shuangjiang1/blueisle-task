@@ -1,7 +1,7 @@
 # 蓝屿任务 Next — Development Status
 
 更新时间：2026-09-10（Asia/Shanghai）
-总体状态：in progress
+总体状态：in progress — UI v0.1.3 发布中
 当前里程碑：M5 Windows 在线更新发布（v0.1.2 已发布并验证）
 
 ## Resume here
@@ -80,7 +80,13 @@ M1 验收闭环：创建目标 → 子步骤 → 安排今天 14:00–16:00 → 
 - 中断后的下一动作：提交并推送 0.1.2 与 tag，监视 GitHub Actions，随后请求公开 latest.json。
 - 中断后的下一动作：若 0.1.2 workflow 成功，验证 GitHub Release 资产含 latest.json，Windows 平台 URL 指向 NSIS 安装包。
 
-## 已完成
+
+## UI 改造（进行中）
+
+- 目标：将现有简约界面升级为有层次的“蓝白纸感工作台”和更强烈的赛博夜间界面；统一楷体、圆角表单、圆润日历、不会换行的日程时间条，并将回顾页合成一个工作台卡片。
+- 当前步骤：verified locally — 视觉改造的 typecheck/build 和浏览器检查均已通过；准备发布 v0.1.3。
+- 计划验证：运行一次 typecheck 和 production build，然后在浏览器检查今天、规划、回顾及弹窗的桌面/手机布局。
+- 中断后的下一动作：提交 UI 改造与版本号 0.1.3，推送 main 和 v0.1.3 tag；待 GitHub workflow 构建 Windows 更新包。`r`n## 已完成
 
 - 创建长期任务。
 - 盘点旧版单文件、Capacitor 安卓工程和 Supabase 同步实验。
@@ -159,6 +165,9 @@ M1 验收闭环：创建目标 → 子步骤 → 安排今天 14:00–16:00 → 
 ## Handoff note
 
 新版工程独立于 `html小应用\蓝屿任务系统.html`。任何接手者先读本文件，只在新工程开发；需要迁移时只读取旧数据结构，不复制历史服务配置或密钥。
+
+
+
 
 
 
