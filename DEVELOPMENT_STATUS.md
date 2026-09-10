@@ -2,14 +2,14 @@
 
 更新时间：2026-09-10（Asia/Shanghai）
 总体状态：in progress — UI 精修 v0.1.4 待发布
-当前里程碑：M6 UI 视觉改造（v0.1.3 GitHub 云端构建中）
+当前里程碑：M6 UI 视觉改造（v0.1.4 GitHub 云端构建中）
 
 ## Resume here
 
 - 最后完成：Android APK 与 Windows installer 均已产出；本地 Git main 仓库和 Web/Windows/Android checks workflow 已建立。
-- 当前/可能运行：GitHub Actions release workflow run 34476647698 正在构建 v0.1.3 Windows 安装包与更新清单。
-- 精确下一动作：等待 run 34476647698 完成，核验 v0.1.3 Release 资产与 latest.json，然后通过应用内“检查更新”升级或下载新安装包。
-- 远程状态：v0.1.2 GitHub Release 已成功；v0.1.3 tag 已推送且正在构建。正确的两个 GitHub Secrets 已保存。
+- 当前/可能运行：GitHub Actions release workflow 正在构建 v0.1.4 Windows 安装包与更新清单。
+- 精确下一动作：等待当前 v0.1.4 workflow 完成，核验 Release 资产与 latest.json，然后通过应用内检查更新升级或下载新安装包。
+- 远程状态：v0.1.2、v0.1.3 GitHub Release 已成功；v0.1.4 tag 已推送且正在构建。正确的两个 GitHub Secrets 已保存。
 - 若立即中断：先运行 `Get-ChildItem -Force` 检查骨架，再按本文件“精确下一步”继续。
 - 阻塞：无。
 - 远程状态：未修改；未创建 GitHub 仓库，未修改 Supabase。
@@ -84,7 +84,7 @@ M1 验收闭环：创建目标 → 子步骤 → 安排今天 14:00–16:00 → 
 ## UI 改造（进行中）
 
 - 目标：将现有简约界面升级为有层次的“蓝白纸感工作台”和更强烈的赛博夜间界面；统一楷体、圆角表单、圆润日历、不会换行的日程时间条，并将回顾页合成一个工作台卡片。
-- 当前步骤：deployed but unverified — v0.1.3 已推送，等待 GitHub 发布完成。
+- 当前步骤：deployed but unverified — v0.1.4 已推送，等待 GitHub 发布完成。
 - 计划验证：运行一次 typecheck 和 production build，然后在浏览器检查今天、规划、回顾及弹窗的桌面/手机布局。
 - 中断后的下一动作：查询 run 34476647698；成功时确认 Release 含 NSIS、.sig、latest.json，失败时读取工作流日志并修复。`r`n
 ## UI 精修（进行中）
@@ -171,6 +171,7 @@ M1 验收闭环：创建目标 → 子步骤 → 安排今天 14:00–16:00 → 
 ## Handoff note
 
 新版工程独立于 `html小应用\蓝屿任务系统.html`。任何接手者先读本文件，只在新工程开发；需要迁移时只读取旧数据结构，不复制历史服务配置或密钥。
+
 
 
 
