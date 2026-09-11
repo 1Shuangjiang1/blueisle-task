@@ -359,5 +359,28 @@
 .select-popover > button:hover { background:var(--surface-2); }
 .select-popover > button.is-selected { background:color-mix(in srgb,var(--primary) 13%,var(--surface)); color:var(--primary); font-weight:700; }
 .select-popover > button svg { flex:0 0 auto; }
+.time-popover {
+  position:absolute; z-index:60; top:calc(100% + 7px); left:0; width:336px; max-width:calc(100vw - 44px); padding:12px;
+  border:1px solid color-mix(in srgb,var(--primary) 25%,var(--line)); border-radius:20px;
+  background:color-mix(in srgb,var(--surface) 97%,transparent); color:var(--text); box-shadow:0 24px 65px rgba(14,38,70,.24); backdrop-filter:blur(20px);
+  animation:popover-in .16s ease-out;
+}
+.custom-time-field.opens-up .time-popover { top:auto; bottom:calc(100% + 7px); transform-origin:bottom center; }
+.form-row .form-field:last-child .time-popover { left:auto; right:0; }
+[data-theme="cyber"] .time-popover { box-shadow:0 24px 70px rgba(0,0,0,.58),0 0 24px rgba(59,232,239,.12); }
+.time-popover header { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; }
+.time-popover header > small,.time-popover header div small { color:var(--muted); font-size:.7rem; }
+.time-hour-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; }
+.time-hour-grid button { min-width:0; min-height:48px; display:grid; place-items:center; gap:2px; padding:5px 2px; border:1px solid var(--line); border-radius:11px; background:var(--surface-2); color:var(--text); }
+.time-hour-grid button strong { font-size:.82rem; }
+.time-hour-grid button small { color:var(--muted); font:600 .56rem "Microsoft YaHei UI",sans-serif; white-space:nowrap; }
+.time-hour-grid button:hover,.time-hour-grid button.is-selected,.time-minute-grid button:hover,.time-minute-grid button.is-selected { border-color:var(--primary); background:color-mix(in srgb,var(--primary) 14%,var(--surface)); color:var(--primary); }
+.time-popover footer { display:flex; justify-content:flex-end; margin-top:9px; padding-top:8px; border-top:1px solid var(--line); }
+.time-popover footer button,.time-minute-header > button { border:0; border-radius:9px; background:transparent; color:var(--primary); font-weight:700; padding:6px 9px; }
+.time-minute-header > button { display:flex; align-items:center; gap:4px; }
+.time-minute-header > div { display:grid; gap:2px; text-align:right; }
+.time-minute-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+.time-minute-grid button { min-height:48px; border:1px solid var(--line); border-radius:12px; background:var(--surface-2); color:var(--text); font-weight:750; }
+.ui-modal { overflow-x:hidden; scrollbar-gutter:stable; }
 @keyframes popover-in { from { opacity:0; transform:translateY(-5px) scale(.98); } to { opacity:1; transform:none; } }
-@media(max-width:760px){.date-popover,.select-popover{width:min(264px,calc(100vw - 44px))}.form-row .date-popover,.form-row .select-popover{left:0;right:auto}.form-row .custom-field.opens-up .date-popover,.form-row .custom-field.opens-up .select-popover{top:auto;bottom:calc(100% + 7px)}.form-row .select-popover{max-height:210px}}
+@media(max-width:760px){.date-popover,.select-popover{width:min(264px,calc(100vw - 44px))}.form-row .date-popover,.form-row .select-popover{left:0;right:auto}.form-row .custom-field.opens-up .date-popover,.form-row .custom-field.opens-up .select-popover{top:auto;bottom:calc(100% + 7px)}.form-row .select-popover{max-height:210px}.time-popover{width:min(320px,calc(100vw - 44px))}.form-row .form-field:last-child .time-popover{right:0;left:auto}}

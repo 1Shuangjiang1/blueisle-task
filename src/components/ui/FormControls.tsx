@@ -1,5 +1,5 @@
 import { CalendarDays, Check, ChevronDown, ChevronLeft, ChevronRight, Clock3 } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Option = { value: string; label: string };
 type Placement = "up" | "down";
@@ -155,14 +155,49 @@ export function SelectField({
 }
 
 export function TimeField({ value, onChange, ariaLabel }: { value: string; onChange: (value: string) => void; ariaLabel: string }) {
-  const options = useMemo(() => {
-    const times: Option[] = [{ value: "", label: "不设置" }];
-    for (let minute = 0; minute < 24 * 60; minute += 15) {
-      const time = `${pad(Math.floor(minute / 60))}:${pad(minute % 60)}`;
-      times.push({ value: time, label: time });
-    }
-    if (value && !times.some((option) => option.value === value)) times.push({ value, label: value });
-    return times;
-  }, [value]);
-  return <SelectField value={value} options={options} onChange={onChange} ariaLabel={ariaLabel} icon="time" initialScrollValue="10:00" />;
+  const hours = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0, 1];
+  const [open, setOpen] = useState(false);
+  const [placement, setPlacement] = useState<Placement>("down");
+  const [selectedHour, setSelectedHour] = useState<number | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const currentHour = value ? Number(value.slice(0, 2)) : undefined;
+  const chooseHour = (hour: number) => setSelectedHour(hour);
+  const chooseTime = (time: string) => {
+    onChange(time);
+    setOpen(false);
+    setSelectedHour(null);
+  };
+  const minuteChoices = selectedHour === null
+    ? []
+    : [0, 15, 30, 45].map((minute) => `${pad(selectedHour)}:${pad(minute)}`)
+      .concat(selectedHour === 1 ? ["02:00"] : []);
+  return (
+    <div ref={rootRef} className={`custom-field custom-time-field opens-${placement}`}>
+      <button type="button" className="custom-field__trigger" aria-label={ariaLabel} aria-haspopup="dialog" aria-expanded={open} onClick={() => {
+        setPlacement(bestPlacement(rootRef.current, 300));
+        setSelectedHour(null);
+        setOpen((current) => !current);
+      }}>
+        <Clock3 size={17} />
+        <span>{value || "不设置"}</span>
+        <ChevronDown size={16} />
+      </button>
+      {open && <div className="time-popover" role="dialog" aria-label={`${ariaLabel}面板`}>
+        {selectedHour === null ? <>
+          <header><strong>先选择小时</strong><small>10:00 至次日 02:00</small></header>
+          <div className="time-hour-grid">
+            {hours.map((hour) => <button type="button" className={currentHour === hour || (value === "02:00" && hour === 1) ? "is-selected" : ""} key={hour} onClick={() => chooseHour(hour)}>
+              <strong>{pad(hour)} 时</strong><small>{pad(hour)}:00–{pad((hour + 1) % 24)}:00</small>
+            </button>)}
+          </div>
+          <footer><button type="button" onClick={() => chooseTime("")}>不设置时间</button></footer>
+        </> : <>
+          <header className="time-minute-header"><button type="button" onClick={() => setSelectedHour(null)}><ChevronLeft size={17} /> 返回</button><div><strong>{pad(selectedHour)}:00–{pad((selectedHour + 1) % 24)}:00</strong><small>再选择具体时刻</small></div></header>
+          <div className="time-minute-grid">
+            {minuteChoices.map((time) => <button type="button" className={value === time ? "is-selected" : ""} key={time} onClick={() => chooseTime(time)}>{time}</button>)}
+          </div>
+        </>}
+      </div>}
+    </div>
+  );
 }
