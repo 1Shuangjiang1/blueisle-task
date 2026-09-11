@@ -1,29 +1,30 @@
 # 蓝屿任务 Next — Development Status
 
 更新时间：2026-09-11（Asia/Shanghai）
-总体状态：in progress — 两步式时间选择器
-当前里程碑：M13 时间选择交互
+总体状态：complete — v0.1.12 两步式时间选择器已发布
+当前里程碑：M13 时间选择交互完成
 
 ## Resume here
 
-- 最后完成：v0.1.8 日期详情已发布。
-- 当前/可能运行：无；本地预览服务已停止，v0.1.11 发布完成。
-- 精确下一动作：用户在应用设置中检查更新至 v0.1.11，验证实际回顾记录的合并显示。
-- 预计修改：`src/features/PlanningPage.tsx`、`src/styles/app.css`。
-- 计划验证：桌面两行截断、点击进入当天详情、手机宽度显示事项数量、typecheck/build。
-- 远程状态：main commit `d450b44` 与 tag `v0.1.11` 已推送；release run `34581849066` success，Release 资产完整。
-- 若立即中断：先运行 `Get-ChildItem -Force` 检查骨架，再按本文件“精确下一步”继续。
+- 最后完成：v0.1.12 两步式时间选择器已发布，结束时间弹层的界面横移已修复。
+- 当前/可能运行：无；本地预览服务已停止，GitHub Actions 发布任务已完成。
+- 精确下一动作：用户在应用设置中检查更新至 v0.1.12，并在“今天”模块实际选择一次开始和结束时间。
+- 本次修改：`src/components/ui/FormControls.tsx`、`src/styles/shell.css`。
+- 最新验证：typecheck/build 通过；浏览器确认 4×4 小时网格、15 分钟刻度和弹窗位置稳定。
+- 远程状态：main commit `e981398` 与 tag `v0.1.12` 已推送；release run `34584550184` success；Release 资产齐全。
+- 若立即中断：无需恢复运行中的步骤；从用户下一项反馈继续。
 - 阻塞：无。
 
 ## M13 时间选择交互
 
-- 状态：verified locally；准备发布 v0.1.12。
+- 状态：complete — v0.1.12 已发布。
 - 目标：开始与结束时间均采用“16 个小时区间 → 15 分钟具体时刻”的两步选择；修复结束时间弹层引起的水平位移。
 - 已实现：4×4 小时区间覆盖 10:00 至次日 02:00；第二层提供 15 分钟刻度及返回；最后区间额外提供 02:00 终点。
 - 位移修复：移除时间列表的自动滚动行为；结束时间弹层右对齐；弹窗禁止横向滚动并稳定预留纵向滚动条。
 - 预计修改：`src/components/ui/FormControls.tsx`、`src/styles/shell.css`。
 - 最新验证：`npm run typecheck` 与 `npm run build` 通过；浏览器确认 4×4 小时区间和四个 15 分钟刻度；结束时间弹层打开前后 modal left 均为 360px、width 均为 560px、scrollLeft 均为 0。
-- 下一动作：发布 v0.1.12 并核验在线更新资产。
+- 发布验证：GitHub release run `34584550184` success；Release 包含 `latest.json`、`蓝屿任务_0.1.12_x64-setup.exe` 与签名文件。
+- 安全下一步：在应用设置中检查更新至 v0.1.12。
 
 ## M12 回顾输入简化
 
