@@ -1,8 +1,8 @@
 # 蓝屿任务 Next — Development Status
 
 更新时间：2026-09-11（Asia/Shanghai）
-总体状态：complete — v0.1.10 月历安排显示与时间菜单定位已发布
-当前里程碑：M11 日历内容一致性完成
+总体状态：in progress — 每日回顾单窗口改造
+当前里程碑：M12 回顾输入简化
 
 ## Resume here
 
@@ -14,6 +14,16 @@
 - 远程状态：main commit `ab23a8d` 与 tag `v0.1.10` 已推送；release run `34579941772` success，Release 资产完整。
 - 若立即中断：先运行 `Get-ChildItem -Force` 检查骨架，再按本文件“精确下一步”继续。
 - 阻塞：无。
+
+## M12 回顾输入简化
+
+- 状态：verified locally；准备发布 v0.1.11。
+- 目标：将“收获、卡点、明日重点”三个输入框合并为一个今日总结输入框，同时兼容已有三段式回顾数据。
+- 预计修改：`src/features/ReviewPage.tsx`、`src/styles/app.css`。
+- 计划验证：旧内容合并显示、保存后统一存储、日期切换正确刷新、typecheck/build 与浏览器检查。
+- 已实现：三个输入框合并为一个“今日总结”；旧三段式记录会自动合并展示，保存后统一写入总结字段。
+- 最新验证：`npm run typecheck` 与 `npm run build` 通过；浏览器确认回顾区只有一个输入框，桌面布局和夜间主题正常。
+- 中断后的下一动作：发布 v0.1.11 并核验在线更新资产。
 
 ## M11 日历内容一致性
 

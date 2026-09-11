@@ -36,6 +36,8 @@
 .calendar-plan { background:color-mix(in srgb,var(--primary) 14%,var(--surface)); color:var(--primary); }
 .calendar-plan:hover { background:color-mix(in srgb,var(--primary) 22%,var(--surface)); }
 .calendar-plan.is-completed { opacity:.58; text-decoration:line-through; }
+.review-form .review-summary-input { min-height:300px; }
+@media(max-width:760px){.review-form .review-summary-input{min-height:230px}}
 .calendar-entry-count { display:none; }
 @media(max-width:390px){.calendar-entry-count{display:block;margin-top:2px;color:var(--primary)!important;font-weight:750}.calendar-day>small:not(.calendar-entry-count){display:none}}
 
