@@ -33,6 +33,7 @@ export interface TodayPageProps {
 export interface PlanningPageProps {
   month: Date;
   events: CalendarEvent[];
+  planBlocks: PlanBlock[];
   goals: Goal[];
   goalProgress?: Record<string, GoalProgress>;
   onMonthChange?: (month: Date) => void;

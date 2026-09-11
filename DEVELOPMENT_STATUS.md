@@ -1,8 +1,8 @@
 # 蓝屿任务 Next — Development Status
 
 更新时间：2026-09-11（Asia/Shanghai）
-总体状态：complete — v0.1.9 日历长标题适配已发布
-当前里程碑：M10 月历信息可读性完成
+总体状态：in progress — 月历安排显示与时间菜单定位
+当前里程碑：M11 日历内容一致性
 
 ## Resume here
 
@@ -14,6 +14,17 @@
 - 远程状态：main commit `557b0a2` 与 tag `v0.1.9` 已推送；release run `34521054689` success，Release 资产完整。
 - 若立即中断：先运行 `Get-ChildItem -Force` 检查骨架，再按本文件“精确下一步”继续。
 - 阻塞：无。
+
+## M11 日历内容一致性
+
+- 状态：verified locally；准备发布 v0.1.10。
+- 已定位：月历格只读取 `events`，日期详情中新建的 `planBlocks` 因而未显示；时间菜单始终从列表顶部（00:00 前）打开。
+- 预计修改：`src/features/PlanningPage.tsx`、`src/features/types.ts`、`src/app/App.tsx`、`src/components/ui/FormControls.tsx`、相关样式。
+- 计划验证：月历同时显示重要日期与具体安排；时间菜单未选值时定位到 10:00、已有值时定位到当前值；typecheck/build 与浏览器检查。
+- 已实现：月历格合并显示重要日期与具体安排，安排带具体时间并使用独立主题色；完成项显示弱化与删除线。
+- 时间菜单：未设置时间时打开直接定位到 10:00；已有值时定位到已选时间；00:00–09:45 仍可向上滚动选择。
+- 最新验证：`npm run typecheck` 与 `npm run build` 通过；浏览器确认月历显示“14:00 模拟题训练”，时间菜单可视区域从 10:00 开始。
+- 中断后的下一动作：发布 v0.1.10 并核验在线更新资产。
 
 ## M10 月历长标题适配
 

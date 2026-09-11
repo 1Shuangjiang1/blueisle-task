@@ -426,6 +426,7 @@ export function App() {
         <PlanningPage
           month={month}
           events={events}
+          planBlocks={plans}
           goals={goals}
           goalProgress={progress}
           onMonthChange={setMonth}

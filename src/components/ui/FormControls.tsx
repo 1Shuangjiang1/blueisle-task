@@ -1,5 +1,5 @@
 import { CalendarDays, Check, ChevronDown, ChevronLeft, ChevronRight, Clock3 } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type Option = { value: string; label: string };
 type Placement = "up" | "down";
@@ -106,17 +106,26 @@ export function SelectField({
   onChange,
   ariaLabel,
   icon = "select",
+  initialScrollValue,
 }: {
   value: string;
   options: Option[];
   onChange: (value: string) => void;
   ariaLabel: string;
   icon?: "select" | "time";
+  initialScrollValue?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState<Placement>("down");
   const rootRef = useRef<HTMLDivElement>(null);
+  const scrollTargetRef = useRef<HTMLButtonElement>(null);
   const selected = options.find((option) => option.value === value) ?? options[0];
+  const scrollValue = value || initialScrollValue;
+  useEffect(() => {
+    if (!open || !scrollValue) return;
+    const frame = window.requestAnimationFrame(() => scrollTargetRef.current?.scrollIntoView({ block: "start" }));
+    return () => window.cancelAnimationFrame(frame);
+  }, [open, scrollValue]);
   return (
     <div ref={rootRef} className={`custom-field custom-select-field opens-${placement}`}>
       <button type="button" className="custom-field__trigger" aria-label={ariaLabel} aria-haspopup="listbox" aria-expanded={open} onClick={() => { setPlacement(bestPlacement(rootRef.current, Math.min(224, options.length * 35 + 14))); setOpen((current) => !current); }}>
@@ -132,6 +141,7 @@ export function SelectField({
               role="option"
               aria-selected={option.value === value}
               className={option.value === value ? "is-selected" : ""}
+              ref={option.value === scrollValue ? scrollTargetRef : undefined}
               key={option.value}
               onClick={() => { onChange(option.value); setOpen(false); }}
             >
@@ -154,5 +164,5 @@ export function TimeField({ value, onChange, ariaLabel }: { value: string; onCha
     if (value && !times.some((option) => option.value === value)) times.push({ value, label: value });
     return times;
   }, [value]);
-  return <SelectField value={value} options={options} onChange={onChange} ariaLabel={ariaLabel} icon="time" />;
+  return <SelectField value={value} options={options} onChange={onChange} ariaLabel={ariaLabel} icon="time" initialScrollValue="10:00" />;
 }

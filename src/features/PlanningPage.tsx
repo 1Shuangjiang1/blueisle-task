@@ -19,6 +19,7 @@ const ymd = (date: Date) =>
 export function PlanningPage({
   month,
   events,
+  planBlocks,
   goals,
   goalProgress = {},
   onMonthChange,
@@ -102,6 +103,23 @@ export function PlanningPage({
               const entries = events.filter(
                 (event) => event.startAt.slice(0, 10) === key,
               );
+              const dayPlans = planBlocks
+                .filter((plan) => plan.date === key)
+                .sort((a, b) => (a.startMinute ?? 1441) - (b.startMinute ?? 1441) || a.order - b.order);
+              const calendarItems = [
+                ...entries.map((event) => ({
+                  id: event.id,
+                  title: event.title,
+                  label: event.title,
+                  className: `calendar-event event--${event.kind}`,
+                })),
+                ...dayPlans.map((plan) => ({
+                  id: plan.id,
+                  title: plan.title,
+                  label: `${plan.startMinute === undefined ? "" : `${String(Math.floor(plan.startMinute / 60)).padStart(2, "0")}:${String(plan.startMinute % 60).padStart(2, "0")} `}${plan.title}`,
+                  className: `calendar-event calendar-plan ${plan.status === "completed" ? "is-completed" : ""}`,
+                })),
+              ];
               const today = key === ymd(new Date());
               return (
                 <div
@@ -121,20 +139,20 @@ export function PlanningPage({
                   {key && (
                     <>
                       <span>{day}</span>
-                      {entries.slice(0, 2).map((event) => (
+                      {calendarItems.slice(0, 2).map((item) => (
                         <button
-                          key={event.id}
-                          className={`calendar-event event--${event.kind}`}
-                          title={event.title}
+                          key={item.id}
+                          className={item.className}
+                          title={item.title}
                           onClick={(clickEvent) => { clickEvent.stopPropagation(); onOpenDay?.(key as LocalDate); }}
                         >
-                          {event.title}
+                          {item.label}
                         </button>
                       ))}
-                      {entries.length > 2 && (
-                        <small>+{entries.length - 2} 项</small>
+                      {calendarItems.length > 2 && (
+                        <small>+{calendarItems.length - 2} 项</small>
                       )}
-                      {entries.length > 0 && <small className="calendar-entry-count">{entries.length} 项事项</small>}
+                      {calendarItems.length > 0 && <small className="calendar-entry-count">{calendarItems.length} 项事项</small>}
                     </>
                   )}
                 </div>
