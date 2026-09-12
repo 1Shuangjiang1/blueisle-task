@@ -1,6 +1,6 @@
 [package]
 name = "blueisle-task"
-version = "0.1.13"
+version = "0.1.14"
 description = "蓝屿任务：个人规划与每日执行系统"
 authors = ["BlueIsle"]
 edition = "2021"

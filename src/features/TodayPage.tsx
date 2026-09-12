@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { AlarmClock, CalendarClock, CalendarDays, Check, ChevronRight, CirclePlus, ClipboardList, Clock3, Pencil, Sparkles } from "lucide-react";
 import type { PlanBlock } from "../domain/models";
 import { Button } from "../components/ui/Button";
@@ -15,6 +16,7 @@ function daysUntil(dateString: string) {
   return days <= 0 ? "今天" : days === 1 ? "明天" : `${days} 天后`;
 }
 export function TodayPage({ date, reminders, planBlocks, goals, steps, onAddPlan, onEditPlan, onCompletePlan, onOpenGoal }: TodayPageProps) {
+  const [activeSection, setActiveSection] = useState<"todos" | "schedule">("todos");
   const ordered = [...planBlocks].sort((a, b) => (a.startMinute ?? 9999) - (b.startMinute ?? 9999) || a.order - b.order);
   const scheduled = ordered.filter((plan) => plan.startMinute !== undefined);
   const todos = ordered.filter((plan) => plan.startMinute === undefined && plan.status !== "cancelled");
@@ -33,7 +35,11 @@ export function TodayPage({ date, reminders, planBlocks, goals, steps, onAddPlan
       </div>
       <div className="surface daily-meter"><span className="metric-label">已规划专注时间</span><strong>{Math.round(planBlocks.reduce((total, item) => total + Math.max(0, (item.endMinute ?? item.startMinute ?? 0) - (item.startMinute ?? 0)), 0) / 60 * 10) / 10}<small> h</small></strong><span className="muted">完成后补充真实投入和成果</span></div>
     </section>
-    <section className="surface daily-todos">
+    <div className="today-section-tabs" role="tablist" aria-label="今日任务分类">
+      <button role="tab" aria-selected={activeSection === "todos"} className={activeSection === "todos" ? "is-active" : ""} onClick={() => setActiveSection("todos")}><ClipboardList size={17} /><span>待办事项</span><strong>{todos.length}</strong></button>
+      <button role="tab" aria-selected={activeSection === "schedule"} className={activeSection === "schedule" ? "is-active" : ""} onClick={() => setActiveSection("schedule")}><CalendarDays size={17} /><span>时间安排</span><strong>{scheduled.length}</strong></button>
+    </div>
+    {activeSection === "todos" && <section className="surface daily-todos" role="tabpanel">
       <div className="section-heading daily-todos__heading"><div><p className="eyebrow">每日待办事项</p><h2>今天要做，还没安排时间</h2></div><Button size="sm" tone="primary" onClick={() => onAddPlan?.({ date, startMinute: undefined, endMinute: undefined })}><CirclePlus size={16} /> 添加待办</Button></div>
       {todos.length ? <div className="daily-todo-list">{todos.map((plan) => {
         const goal = plan.goalId ? goalById.get(plan.goalId) : undefined;
@@ -45,9 +51,9 @@ export function TodayPage({ date, reminders, planBlocks, goals, steps, onAddPlan
           <div className="daily-todo__actions">{done ? <StatusPill status="completed" /> : <><Button size="sm" tone="quiet" onClick={() => onEditPlan?.(plan)}><Pencil size={14} /> 编辑</Button><Button size="sm" tone="quiet" onClick={() => onEditPlan?.(plan)}><CalendarClock size={15} /> 安排时间</Button><Button size="sm" tone="primary" onClick={() => onCompletePlan?.(plan)}><Check size={15} /> 完成</Button></>}</div>
         </article>;
       })}</div> : <EmptyState title="先把今天要做的事放在这里" description="暂时不确定时间也没关系，稍后再安排进日程。" action={<Button size="sm" onClick={() => onAddPlan?.({ date })}><CirclePlus size={15} /> 添加第一项待办</Button>} />}
-    </section>
-    <section className="surface schedule"><div className="section-heading"><div><p className="eyebrow">时间安排</p><h2>今天的节奏</h2></div><CalendarDays size={21} /></div>
+    </section>}
+    {activeSection === "schedule" && <section className="surface schedule" role="tabpanel"><div className="section-heading"><div><p className="eyebrow">时间安排</p><h2>今天的节奏</h2></div><CalendarDays size={21} /></div>
       {scheduled.length ? <div className="timeline">{scheduled.map((plan) => { const goal = plan.goalId ? goalById.get(plan.goalId) : undefined; const step = plan.goalStepId ? stepById.get(plan.goalStepId) : undefined; const done = plan.status === "completed"; return <article className={`plan-row ${done ? "is-done" : ""}`} key={plan.id}><time>{timeLabel(plan)}</time><div className="timeline-dot" /><div className="plan-content"><div><h3>{plan.title}</h3>{goal && <button className="link-label" onClick={() => onOpenGoal?.(goal.id)}>{goal.title}{step ? ` · ${step.title}` : ""}</button>}</div><p>{plan.notes || (goal ? "推进关联目标" : "个人安排")}</p></div><div className="plan-actions">{done ? <StatusPill status="completed" /> : <><Button size="sm" tone="quiet" aria-label={`编辑 ${plan.title}`} onClick={() => onEditPlan?.(plan)}>编辑</Button><Button size="sm" tone="primary" onClick={() => onCompletePlan?.(plan)}><Check size={15} /> 完成</Button></>}</div></article>})}</div> : <EmptyState title="今天还没有定时安排" description="从上面的待办中挑一件，为它留出具体时间。" action={<Button tone="primary" onClick={() => onAddPlan?.()}><Clock3 size={16} /> 添加时间安排</Button>} />}
-    </section>
+    </section>}
   </main>;
 }
