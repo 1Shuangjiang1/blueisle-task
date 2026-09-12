@@ -1,29 +1,30 @@
 # 蓝屿任务 Next — Development Status
 
 更新时间：2026-09-11（Asia/Shanghai）
-总体状态：in progress — 今天页待办/时间安排分页
-当前里程碑：M15 今天页双分页
+总体状态：complete — v0.1.14 今天页双分页已发布
+当前里程碑：M15 今天页双分页完成
 
 ## Resume here
 
 - 最后完成：v0.1.13 每日待办事项已发布。
-- 当前/可能运行：M15 已本地验证；本地预览已停止。
-- 精确下一动作：提交 v0.1.14、推送 main 与 tag，然后核验 GitHub Release。
+- 当前/可能运行：无；本地预览已停止，v0.1.14 Release 构建完成。
+- 精确下一动作：用户在应用设置中检查更新至 v0.1.14，并使用待办/时间安排分页切换。
 - 本次修改：`src/features/TodayPage.tsx`、`src/styles/app.css`。
 - 最新验证：production build 通过；浏览器确认默认待办页、时间安排页切换及两页互斥显示。
-- 远程状态：main commit `53a2855`；v0.1.13 Release 已发布。M15 尚未改变远程状态。
-- 若立即中断：提交并推送 main 与 `v0.1.14` tag；远程尚未改变。
+- 远程状态：main commit `0bbb820` 与 tag `v0.1.14` 已推送；release run `34686995719` success；Release 资产齐全。
+- 若立即中断：无需恢复运行步骤；从用户下一项反馈继续。
 - 阻塞：无。
 
 ## M15 今天页双分页
 
-- 状态：verified locally；准备发布 v0.1.14。
+- 状态：complete — v0.1.14 已发布。
 - 目标：将每日待办事项和时间安排分成两个可快速切换的分页，一次只显示一类内容。
 - 关键决定：分页只控制界面展示，继续沿用 `PlanBlock.startMinute` 分类，不改变数据与同步格式。
 - 预计修改：`src/features/TodayPage.tsx`、`src/styles/app.css`。
 - 已实现：带图标与数量的“待办事项 / 时间安排”双分页；一次只渲染当前分页，默认进入待办事项。
 - 最新验证：`npm run build` 通过；浏览器确认分页可切换、选中状态正确，待办页与时间轴不会同时出现。
-- 下一动作：发布 v0.1.14 并核验在线更新资产。
+- 发布验证：GitHub release run `34686995719` success（6m49s）；Release 包含 `latest.json`、`蓝屿任务_0.1.14_x64-setup.exe` 与签名文件。
+- 安全下一步：在应用设置中检查更新至 v0.1.14。
 
 ## M14 每日待办事项
 
