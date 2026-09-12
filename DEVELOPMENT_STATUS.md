@@ -1,19 +1,30 @@
 # 蓝屿任务 Next — Development Status
 
 更新时间：2026-09-11（Asia/Shanghai）
-总体状态：complete — v0.1.12 两步式时间选择器已发布
-当前里程碑：M13 时间选择交互完成
+总体状态：in progress — 每日待办事项模块
+当前里程碑：M14 每日待办事项
 
 ## Resume here
 
-- 最后完成：v0.1.12 两步式时间选择器已发布，结束时间弹层的界面横移已修复。
-- 当前/可能运行：无；本地预览服务已停止，GitHub Actions 发布任务已完成。
-- 精确下一动作：用户在应用设置中检查更新至 v0.1.12，并在“今天”模块实际选择一次开始和结束时间。
-- 本次修改：`src/components/ui/FormControls.tsx`、`src/styles/shell.css`。
-- 最新验证：typecheck/build 通过；浏览器确认 4×4 小时网格、15 分钟刻度和弹窗位置稳定。
-- 远程状态：main commit `e981398` 与 tag `v0.1.12` 已推送；release run `34584550184` success；Release 资产齐全。
-- 若立即中断：无需恢复运行中的步骤；从用户下一项反馈继续。
+- 最后完成：v0.1.12 两步式时间选择器已发布。
+- 当前/可能运行：M14 已本地验证；本地预览服务即将停止。
+- 精确下一动作：提交 v0.1.13 功能、推送 main 与 tag，然后核验 GitHub Release。
+- 本次修改：`src/features/TodayPage.tsx`、`src/styles/app.css`。
+- 最新验证：production build 通过；浏览器确认添加待办、待办区展示及设置 10:00 后迁入时间轴的完整闭环。
+- 远程状态：main commit `b31de1f`；v0.1.12 Release 已发布。M14 尚未改变远程状态。
+- 若立即中断：先确认本地预览已停止，再提交、推送 main 和 `v0.1.13` tag；远程尚未改变。
 - 阻塞：无。
+
+## M14 每日待办事项
+
+- 状态：verified locally；准备发布 v0.1.13。
+- 目标：在“今天”页单独展示当天要做但尚未安排时间的事项；支持快捷添加、编辑、安排具体时间和完成。
+- 关键决定：继续使用 `PlanBlock`，以 `startMinute === undefined` 表示每日待办，避免数据库迁移并保持现有同步兼容。
+- 已实现：无开始时间的当天事项进入独立待办区；支持添加、编辑、安排时间和完成；有时间的事项仅保留在时间轴。
+- 本步修改：`src/features/TodayPage.tsx`、`src/styles/app.css`。
+- 验证计划：typecheck/build；确认有时间事项只在时间轴、无时间事项只在待办区；确认窄屏按钮不溢出。
+- 最新验证：`npm run build` 通过；浏览器创建“整理明天面试材料”后只显示在待办区，设置 10:00 保存后只显示在时间轴。
+- 下一动作：发布 v0.1.13 并核验在线更新资产。
 
 ## M13 时间选择交互
 
